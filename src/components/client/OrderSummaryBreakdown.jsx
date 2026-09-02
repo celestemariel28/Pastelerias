@@ -14,7 +14,7 @@ export default function OrderSummaryBreakdown({
   const cartEntries = Object.entries(cart).filter(([_, item]) => (parseInt(item?.quantity, 10) || 0) > 0);
 
   return (
-    <div className="bg-rose-50/40 rounded-2xl p-3.5 border border-pink-100 space-y-3 min-w-0">
+    <div className="bg-primary-clear rounded-2xl p-3.5 border border-primary-clear-b space-y-3 min-w-0">
       {/* Lista de productos con botón de eliminar */}
       <div className="space-y-2 max-h-48 overflow-y-auto pr-1 min-w-0">
         {cartEntries.map(([cartKey, item]) => {
@@ -26,7 +26,7 @@ export default function OrderSummaryBreakdown({
           return (
             <div 
               key={cartKey} 
-              className="flex items-center justify-between gap-2 p-2 bg-white rounded-xl border border-pink-50 shadow-2xs min-w-0"
+              className="flex items-center justify-between gap-2 p-2 bg-white rounded-xl border border-primary-clear-b shadow-2xs min-w-0"
             >
               <div className="flex-1 min-w-0">
                 <p className="text-xs font-bold text-gray-800 truncate" title={name}>
@@ -38,7 +38,7 @@ export default function OrderSummaryBreakdown({
                   </p>
                 )}
                 {item.filling && (
-                  <p className="text-[10px] text-pink-600 font-medium truncate">
+                  <p className="text-[10px] text-primary font-medium truncate">
                     Relleno: {item.filling}
                   </p>
                 )}
@@ -72,14 +72,14 @@ export default function OrderSummaryBreakdown({
       </div>
 
       {/* Desglose de importes */}
-      <div className="border-t border-pink-100/80 pt-2.5 space-y-1.5 text-xs">
+      <div className="border-t border-primary-clear-b pt-2.5 space-y-1.5 text-xs">
         <div className="flex justify-between text-gray-600">
           <span>Subtotal:</span>
           <span className="font-semibold">${(subtotal || 0).toLocaleString('es-AR')}</span>
         </div>
 
         {appliesDiscount && discountAmount > 0 && (
-          <div className="flex justify-between items-center text-[#E91E63] font-medium gap-2">
+          <div className="flex justify-between items-center text-primary font-medium gap-2">
             <span className="truncate">
               Desc. {discountSettings?.paymentMethod || 'Efectivo'} ({discountSettings?.percent || 0}% OFF):
             </span>
@@ -87,9 +87,9 @@ export default function OrderSummaryBreakdown({
           </div>
         )}
 
-        <div className="flex justify-between text-sm font-black text-gray-900 pt-1 border-t border-dashed border-pink-200">
+        <div className="flex justify-between text-sm font-black text-gray-900 pt-1 border-t border-dashed border-primary-clear-b">
           <span>Total a Pagar:</span>
-          <span className="text-[#E91E63]">
+          <span className="text-primary">
             ${(totalFinal !== undefined ? totalFinal : subtotal).toLocaleString('es-AR')}
           </span>
         </div>

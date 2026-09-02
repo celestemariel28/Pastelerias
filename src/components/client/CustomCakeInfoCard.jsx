@@ -70,15 +70,15 @@ export default function CustomCakeInfoCard({
       {!isControlled && (
         <div
           className={`rounded-3xl p-5 mb-5 border-2 transition-all ${
-            infoRead ? 'bg-emerald-50 border-emerald-300' : 'bg-rose-50/80 border-[#E91E63] shadow-lg'
+            infoRead ? 'bg-emerald-50 border-emerald-300' : 'bg-primary-clear border-primary shadow-lg'
           }`}
         >
           <div className="flex items-center justify-between mb-2">
             <div>
-              <span className="text-[10px] font-black tracking-wider uppercase px-2 py-0.5 bg-[#E91E63] text-white rounded-full">
+              <span className="text-[10px] font-black tracking-wider uppercase px-2 py-0.5 bg-primary text-white rounded-full">
                 Paso 1 Obligatorio
               </span>
-              <h3 className="font-black text-sm text-[#D81B60] mt-1">Información Importante</h3>
+              <h3 className="font-black text-sm text-primary-dark mt-1">Información Importante</h3>
             </div>
             {infoRead && (
               <span className="bg-emerald-500 text-white px-2.5 py-1 rounded-full text-xs font-black flex items-center gap-1 shadow-sm">
@@ -103,7 +103,7 @@ export default function CustomCakeInfoCard({
             className={`w-full py-3 rounded-2xl text-xs font-black flex items-center justify-center gap-1.5 shadow-md active:scale-95 transition-transform cursor-pointer ${
               infoRead
                 ? 'bg-white border-2 border-emerald-500 text-emerald-700 hover:bg-emerald-50'
-                : 'bg-[#E91E63] text-white hover:bg-[#d81b60]'
+                : 'bg-primary text-white hover:bg-primary-dark'
             }`}
           >
             {infoRead ? 'Volver a ver información' : 'Ver Información Importante'}
@@ -117,12 +117,12 @@ export default function CustomCakeInfoCard({
             <button
               type="button"
               onClick={handleClose}
-              className="absolute top-4 right-4 w-8 h-8 bg-pink-100 text-[#E91E63] rounded-full flex items-center justify-center hover:bg-pink-200 font-bold cursor-pointer active:scale-90 transition-transform z-10 shadow-sm"
+              className="absolute top-4 right-4 w-8 h-8 bg-primary-clear border border-primary text-primary rounded-full flex items-center justify-center hover:bg-primary-clear-bg font-bold cursor-pointer active:scale-90 transition-transform z-10 shadow-sm"
             >
               <X className="w-4 h-4" />
             </button>
 
-            <h3 className="font-black text-sm text-[#D81B60] mb-1 uppercase text-center pr-8 pl-2">
+            <h3 className="font-black text-sm text-primary-dark mb-1 uppercase text-center pr-8 pl-2">
               {currentSlide?.title || 'Información Importante'}
             </h3>
 
@@ -150,7 +150,7 @@ export default function CustomCakeInfoCard({
                 <button
                   type="button"
                   onClick={handlePrev}
-                  className="w-10 h-10 bg-pink-100 hover:bg-pink-200 text-[#E91E63] rounded-full flex items-center justify-center shadow-sm active:scale-90 transition-transform cursor-pointer"
+                  className="w-10 h-10 bg-primary-clear hover:bg-primary-clear-bg text-primary rounded-full flex items-center justify-center shadow-sm active:scale-90 transition-transform cursor-pointer"
                   title="Anterior"
                 >
                   <ArrowLeft className="w-5 h-5" />
@@ -163,7 +163,7 @@ export default function CustomCakeInfoCard({
                       type="button"
                       onClick={() => setCurrentIndex(idx)}
                       className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
-                        idx === currentIndex ? 'w-6 bg-[#E91E63]' : 'w-2 bg-pink-200'
+                        idx === currentIndex ? 'w-6 bg-primary' : 'w-2 bg-primary-clear'
                       }`}
                     />
                   ))}
@@ -172,7 +172,7 @@ export default function CustomCakeInfoCard({
                 <button
                   type="button"
                   onClick={handleNext}
-                  className="w-10 h-10 bg-pink-100 hover:bg-pink-200 text-[#E91E63] rounded-full flex items-center justify-center shadow-sm active:scale-90 transition-transform cursor-pointer"
+                  className="w-10 h-10 bg-primary-clear hover:bg-primary-clear-bg text-primary rounded-full flex items-center justify-center shadow-sm active:scale-90 transition-transform cursor-pointer"
                   title="Siguiente"
                 >
                   <ArrowRight className="w-5 h-5" />

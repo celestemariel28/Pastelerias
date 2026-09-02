@@ -14,7 +14,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
           path="/admin" 
           element={
             <div className="min-h-screen bg-[#FFF5F7] flex items-center justify-center font-sans antialiased p-4">
-              <div className="w-full max-w-md flex flex-col overflow-hidden">
+              {/* Cambiado max-w-md por max-w-5xl */}
+              <div className="w-full max-w-xl flex flex-col overflow-hidden">
                 <AdminLayout />
               </div>
             </div>

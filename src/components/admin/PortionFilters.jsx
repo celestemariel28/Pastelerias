@@ -10,14 +10,14 @@ export default function PortionFilters({
 }) {
   return (
     <div className="space-y-2 mb-3.5 w-full min-w-0">
-      <div className="grid grid-cols-2 bg-pink-50/70 border border-pink-200/80 p-1 rounded-xl gap-1">
+      <div className="grid grid-cols-2 bg-primary-clear border border-primary-clear-b p-1 rounded-xl gap-1">
         <button
           type="button"
           onClick={() => setActiveFloors(1)}
           className={`py-2 px-2 text-xs font-black rounded-lg transition-all flex items-center justify-center gap-1.5 cursor-pointer select-none ${
             activeFloors === 1 
-              ? 'bg-[#E91E63] text-white shadow-xs' 
-              : 'text-[#D81B60] hover:bg-pink-100/60'
+              ? 'bg-primary text-white shadow-xs' 
+              : 'text-primary-dark hover:bg-primary-clear'
           }`}
         >
           <CakeSlice className="w-3.5 h-3.5 shrink-0" />
@@ -29,8 +29,8 @@ export default function PortionFilters({
           onClick={() => setActiveFloors(2)}
           className={`py-2 px-2 text-xs font-black rounded-lg transition-all flex items-center justify-center gap-1.5 cursor-pointer select-none ${
             activeFloors === 2 
-              ? 'bg-[#E91E63] text-white shadow-xs' 
-              : 'text-[#D81B60] hover:bg-pink-100/60'
+              ? 'bg-primary text-white shadow-xs' 
+              : 'text-primary-dark hover:bg-primary-light'
           }`}
         >
           <Layers className="w-3.5 h-3.5 shrink-0" />
@@ -49,7 +49,7 @@ export default function PortionFilters({
               onClick={() => setActiveType(cov.name.toLowerCase())}
               className={`py-1.5 px-3 text-xs font-bold rounded-lg transition-all whitespace-nowrap shrink-0 cursor-pointer select-none ${
                 isSelected
-                  ? 'bg-white text-[#E91E63] shadow-xs'
+                  ? 'bg-white text-primary shadow-xs'
                   : 'text-gray-500 hover:text-gray-800 hover:bg-white/50'
               }`}
             >

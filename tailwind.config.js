@@ -7,10 +7,13 @@ export default {
   theme: {
     extend: {
       colors: {
-        pastelPink: '#FFD0DE', 
-        darkPink: '#FFE9EF',
+        primary: {
+          light: '#f8d6e0',
+          DEFAULT: '#E91E63',
+          dark: '#D81B60',
+        },
       },
     },
   },
   plugins: [],
-}
+};

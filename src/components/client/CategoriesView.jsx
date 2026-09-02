@@ -25,7 +25,7 @@ export default function CategoriesView({
       <HeroCarousel discountSettings={discountSettings} />
 
       <div id="seccion-categorias" className="scroll-mt-24 pt-4 mb-4">
-        <h2 className="text-2xl sm:text-3xl font-extrabold text-[#E91E63] text-center tracking-wide">
+        <h2 className="text-2xl sm:text-3xl font-extrabold text-primary text-center tracking-wide">
           Categorías
         </h2>
       </div>
@@ -36,7 +36,7 @@ export default function CategoriesView({
             key={cat.id}
             type="button"
             onClick={() => handleSelectCategory(cat)}
-            className="group w-full h-32 sm:h-36 rounded-2xl overflow-hidden relative flex items-center justify-center cursor-pointer shadow-sm active:scale-95 transition-all duration-200 border border-pink-100"
+            className="group w-full h-32 sm:h-36 rounded-2xl overflow-hidden relative flex items-center justify-center cursor-pointer shadow-sm active:scale-95 transition-all duration-200 border border-primary-clear-b"
           >
             <img
               src={cat.image || cat.image_url}
@@ -45,9 +45,9 @@ export default function CategoriesView({
             />
 
             <div className="absolute inset-0 bg-black/25 group-hover:bg-black/35 transition-colors duration-300" />
-            <div className="absolute inset-0 bg-[#E91E63]/25 mix-blend-multiply" />
+            <div className="absolute inset-0 bg-primary-categoria-bg mix-blend-multiply" />
 
-            <span className=" categ-nombre relative z-10 text-xl sm:text-2xl font-black text-white uppercase tracking-wider drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)] px-3 text-center transition-transform duration-300 group-hover:scale-105">
+            <span className="categ-nombre relative z-10 text-lg sm:text-xl md:text-2xl font-black text-white uppercase tracking-normal sm:tracking-wide drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)] px-4 text-center leading-tight max-w-full transition-transform duration-300 group-hover:scale-105">
               {cat.name}
             </span>
           </button>

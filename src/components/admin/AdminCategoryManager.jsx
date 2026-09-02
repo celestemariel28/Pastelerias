@@ -28,7 +28,7 @@ function AdminCategoryManager({ onRefreshProducts, onCategoryChanged }) {
               </>
             ) : (
               <>
-                <Tag className="w-3 h-3 text-[#E91E63]" />
+                <Tag className="w-3 h-3 text-primary" />
                 <span>Nueva Categoría</span>
               </>
             )}
@@ -50,7 +50,7 @@ function AdminCategoryManager({ onRefreshProducts, onCategoryChanged }) {
           placeholder="Nombre (Ej: Tartas Frutales)" 
           value={newCategoryName}
           onChange={(e) => setters.setNewCategoryName(e.target.value)}
-          className="w-full px-3 py-2 bg-white rounded-lg border border-gray-200 text-xs focus:outline-none focus:border-[#E91E63]"
+          className="w-full px-3 py-2 bg-white rounded-lg border border-gray-200 text-xs focus:outline-none focus:border-primary"
         />
         
         <ImageUploader
@@ -66,7 +66,7 @@ function AdminCategoryManager({ onRefreshProducts, onCategoryChanged }) {
           className={`w-full py-2 text-white rounded-lg text-xs font-bold active:scale-95 transition-all shadow-sm disabled:opacity-50 mt-1 cursor-pointer ${
             categoryToEdit 
               ? 'bg-amber-500 hover:bg-amber-600' 
-              : 'bg-[#E91E63] hover:bg-[#d81b60]'
+              : 'bg-primary hover:bg-primary-dark'
           }`}
         >
           {loading ? 'Guardando...' : categoryToEdit ? 'Actualizar Cambios' : 'Añadir Categoría'}

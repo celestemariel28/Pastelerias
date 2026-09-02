@@ -26,7 +26,7 @@ export default function ProductCard({ product, totalInCart, onOpenModal }) {
   return (
     <div
       onClick={() => onOpenModal(product)}
-      className="bg-white rounded-3xl p-3 shadow-sm border border-pink-100 flex gap-3.5 sm:gap-4 items-center cursor-pointer hover:scale-[1.01] transition-transform min-w-0"
+      className="bg-white rounded-3xl p-3 shadow-sm border border-primary-clear-b flex gap-3.5 sm:gap-4 items-center cursor-pointer hover:scale-[1.01] transition-transform min-w-0"
     >
       {/* Imagen del Producto */}
       <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl overflow-hidden bg-gray-100 shrink-0">
@@ -39,7 +39,7 @@ export default function ProductCard({ product, totalInCart, onOpenModal }) {
 
       {/* Información */}
       <div className="flex-1 min-w-0">
-        <h3 className="font-extrabold text-sm sm:text-base text-[#E91E63] leading-tight truncate">
+        <h3 className="font-extrabold text-sm sm:text-base text-primary leading-tight truncate">
           {product.name}
         </h3>
         
@@ -63,7 +63,7 @@ export default function ProductCard({ product, totalInCart, onOpenModal }) {
             )}
 
             {totalInCart > 0 && (
-              <span className="bg-[#E91E63] text-white text-[10px] font-black px-2.5 py-0.5 rounded-full shadow-2xs">
+              <span className="bg-primary text-white text-[10px] font-black px-2.5 py-0.5 rounded-full shadow-2xs">
                 {totalInCart} en pedido
               </span>
             )}

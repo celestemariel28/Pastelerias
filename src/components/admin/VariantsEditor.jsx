@@ -12,7 +12,7 @@ export default function VariantsEditor({ variants, onAddVariant, onRemoveVariant
         <button
           type="button"
           onClick={onAddVariant}
-          className="text-[#E91E63] text-xs font-bold hover:text-[#d81b60] flex items-center gap-1 cursor-pointer active:scale-95 transition-transform"
+          className="text-primary text-xs font-bold hover:text-primary-dark flex items-center gap-1 cursor-pointer active:scale-95 transition-transform"
         >
           <Plus className="w-3.5 h-3.5" /> 
           <span>Añadir</span>

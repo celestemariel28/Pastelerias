@@ -100,8 +100,8 @@ export default function CustomCakeAdmin() {
   );
 
   return (
-    <div className="w-full max-w-lg mx-auto p-3.5 sm:p-4 bg-white rounded-2xl shadow-sm border border-pink-100 flex flex-col h-full min-w-0">
-      <h3 className="text-base sm:text-lg font-black text-[#E91E63] mb-2 truncate">
+    <div className="w-full max-w-lg mx-auto p-3.5 sm:p-4 bg-white rounded-2xl shadow-sm border border-primary-clear-b flex flex-col h-full min-w-0">
+      <h3 className="text-base sm:text-lg font-black text-primary mb-2 truncate">
         Precios y Porciones
       </h3>
 
@@ -122,7 +122,7 @@ export default function CustomCakeAdmin() {
             placeholder="Porción (ej: 25 Porciones)"
             value={newLabel}
             onChange={(e) => setNewLabel(e.target.value)}
-            className="w-full bg-rose-50/50 border border-rose-200 rounded-xl px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-[#E91E63]"
+            className="w-full bg-primary-clear border border-primary-clear-b rounded-xl px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-primary"
           />
         </div>
 
@@ -134,14 +134,14 @@ export default function CustomCakeAdmin() {
             placeholder="Precio $"
             value={newPrice}
             onChange={(e) => setNewPrice(e.target.value)}
-            className="w-full bg-rose-50/50 border border-rose-200 rounded-xl px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-[#E91E63]"
+            className="w-full bg-primary-clear border border-primary-clear-b rounded-xl px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-primary"
           />
         </div>
 
         <div className="col-span-4 sm:col-span-2">
           <button
             type="submit"
-            className="w-full h-full min-h-[34px] py-2 px-3 bg-[#E91E63] text-white rounded-xl text-xs font-bold shadow-sm active:scale-95 transition-transform hover:bg-[#d81b60] flex items-center justify-center space-x-1 cursor-pointer"
+            className="w-full h-full min-h-[34px] py-2 px-3 bg-primary text-white rounded-xl text-xs font-bold shadow-sm active:scale-95 transition-transform hover:bg-primary-dark flex items-center justify-center space-x-1 cursor-pointer"
             title="Agregar Porción"
           >
             <PlusCircle className="w-4 h-4 shrink-0" />
@@ -153,7 +153,7 @@ export default function CustomCakeAdmin() {
       <div className="flex-1 overflow-y-auto pr-1 min-w-0 space-y-2">
         {loading ? (
           <div className="flex items-center justify-center py-6 text-gray-400 gap-2">
-            <Loader2 className="w-4 h-4 animate-spin text-[#E91E63]" />
+            <Loader2 className="w-4 h-4 animate-spin text-primary" />
             <span className="text-xs">Cargando porciones...</span>
           </div>
         ) : (

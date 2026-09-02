@@ -26,14 +26,14 @@ export default function HeroCarousel({
   }, [cakeSlides.length]);
 
   return (
-    <div className="relative overflow-hidden bg-[#FCE6ED] rounded-3xl mb-6 shadow-sm border border-pink-100/60 flex items-stretch min-h-[160px] sm:min-h-[180px] w-full min-w-0">
+    <div className="relative overflow-hidden bg-primary-light rounded-3xl mb-6 shadow-sm flex items-stretch min-h-[160px] sm:min-h-[180px] w-full min-w-0">
       
       <div className="w-[60%] p-4 sm:p-6 flex flex-col justify-center z-10 min-w-0">
         <h2 className="text-lg sm:text-2xl font-black text-gray-900 leading-tight">
           Elegí tu torta <br />
-          <span className="inline-flex items-center gap-1.5 text-[#E91E63]">
+          <span className="inline-flex items-center gap-1.5 text-primary">
             ideal
-            <Heart className="w-4 h-4 text-[#E91E63] fill-[#E91E63] inline-block animate-pulse shrink-0" />
+            <Heart className="w-4 h-4 text-primary fill-primary inline-block animate-pulse shrink-0" />
           </span>
         </h2>
 
@@ -44,14 +44,14 @@ export default function HeroCarousel({
 
         <div className="mt-3">
           {discountSettings?.isActive && parseFloat(discountSettings?.percent) > 0 ? (
-            <div className="inline-flex items-center gap-1.5 bg-[#E91E63] text-white px-3 py-1.5 rounded-xl shadow-xs text-[10px] sm:text-xs font-black tracking-wide animate-pulse max-w-full">
+            <div className="inline-flex items-center gap-1.5 bg-primary text-white px-3 py-1.5 rounded-xl shadow-xs text-[10px] sm:text-xs font-black tracking-wide animate-pulse max-w-full">
               <Tag className="w-3 h-3 shrink-0" />
               <span className="truncate">
                 {discountSettings.percent}% OFF {discountSettings.paymentMethod || 'Efectivo'}
               </span>
             </div>
           ) : (
-            <div className="inline-flex items-center gap-1 bg-[#E91E63] text-white px-3 py-1.5 rounded-xl shadow-xs text-[10px] sm:text-xs font-black tracking-wide">
+            <div className="inline-flex items-center gap-1 bg-primary text-white px-3 py-1.5 rounded-xl shadow-xs text-[10px] sm:text-xs font-black tracking-wide">
               <span>100% Artesanal</span>
               <Sparkles className="w-3 h-3 text-pink-200 shrink-0" />
             </div>
@@ -59,7 +59,7 @@ export default function HeroCarousel({
         </div>
       </div>
 
-      <div className="w-[40%] relative overflow-hidden bg-pink-100/40">
+      <div className="w-[40%] relative overflow-hidden bg-primary-clear-bg">
         {cakeSlides.map((imgSrc, idx) => {
           const url = typeof imgSrc === 'string' ? imgSrc : imgSrc.image_url;
           const isCurrent = idx === currentIndex;

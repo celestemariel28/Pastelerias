@@ -111,7 +111,7 @@ export default function ProductFormModal({
     <div className="fixed inset-0 bg-black/50 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4 z-50 animate-fadeIn">
       <div className="bg-white w-full max-w-sm rounded-3xl p-5 sm:p-6 shadow-2xl flex flex-col max-h-[90vh] min-w-0">
         <div className="flex items-center justify-between pb-3 border-b border-gray-100 mb-3">
-          <h3 className="text-base sm:text-lg font-black text-[#E91E63] flex items-center gap-2 truncate">
+          <h3 className="text-base sm:text-lg font-black text-primary flex items-center gap-2 truncate">
             {productToEdit ? (
               <>
                 <FileEdit className="w-5 h-5 text-amber-500 shrink-0" />
@@ -119,7 +119,7 @@ export default function ProductFormModal({
               </>
             ) : (
               <>
-                <Sparkles className="w-5 h-5 text-pink-500 shrink-0" />
+                <Sparkles className="w-5 h-5 text-primary shrink-0" />
                 <span>Nuevo Dulce</span>
               </>
             )}
@@ -137,7 +137,7 @@ export default function ProductFormModal({
                 required
                 value={formData.name}
                 onChange={(e) => setters.setName(e.target.value)}
-                className="w-full px-3 py-2 bg-gray-50 rounded-xl border border-gray-100 text-xs sm:text-sm focus:outline-none focus:border-[#E91E63]"
+                className="w-full px-3 py-2 bg-gray-50 rounded-xl border border-gray-100 text-xs sm:text-sm focus:outline-none focus:border-primary"
                 placeholder="Ej: Tarta Toffee"
               />
             </div>
@@ -149,7 +149,7 @@ export default function ProductFormModal({
               <select
                 value={formData.categoryId}
                 onChange={(e) => setters.setCategoryId(e.target.value)}
-                className="w-full px-3 py-2 bg-gray-50 rounded-xl border border-gray-100 text-xs sm:text-sm focus:outline-none focus:border-[#E91E63]"
+                className="w-full px-3 py-2 bg-gray-50 rounded-xl border border-gray-100 text-xs sm:text-sm focus:outline-none focus:border-primary"
                 required
               >
                 <option value="">Seleccionar categoría</option>
@@ -183,7 +183,7 @@ export default function ProductFormModal({
                 value={formData.description}
                 onChange={(e) => setters.setDescription(e.target.value)}
                 rows="2"
-                className="w-full px-3 py-2 bg-gray-50 rounded-xl border border-gray-100 text-xs focus:outline-none focus:border-[#E91E63] resize-none"
+                className="w-full px-3 py-2 bg-gray-50 rounded-xl border border-gray-100 text-xs focus:outline-none focus:border-primary resize-none"
                 placeholder="Ingredientes, recomendaciones de consumo..."
               />
             </div>
@@ -201,7 +201,7 @@ export default function ProductFormModal({
             <button
               type="submit"
               disabled={loading}
-              className="flex-1 py-2.5 bg-[#E91E63] hover:bg-[#d81b60] text-white rounded-xl text-xs font-bold active:scale-95 transition-all shadow-sm disabled:opacity-50 flex items-center justify-center gap-1.5 cursor-pointer"
+              className="flex-1 py-2.5 bg-primary hover:bg-primary-dark text-white rounded-xl text-xs font-bold active:scale-95 transition-all shadow-sm disabled:opacity-50 flex items-center justify-center gap-1.5 cursor-pointer"
             >
               {loading && <Loader2 className="w-3.5 h-3.5 animate-spin" />}
               <span>{loading ? 'Guardando...' : 'Guardar'}</span>

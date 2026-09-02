@@ -1,4 +1,3 @@
-import React from 'react';
 import { ArrowLeft, ArrowRight, PlusCircle, ShoppingBag, Trash2, Tag } from 'lucide-react';
 import ViewHeader from '../common/ViewHeader';
 
@@ -15,11 +14,11 @@ export default function CartView({
   if (cartItems.length === 0) {
     return (
       <main className="flex-1 p-6 max-w-md mx-auto w-full flex flex-col items-center justify-center gap-4 text-center animate-fadeIn min-h-[60vh]">
-        <div className="w-20 h-20 rounded-full bg-pink-100 flex items-center justify-center text-[#E91E63] shadow-inner">
+        <div className="w-20 h-20 rounded-full bg-primary-clear flex items-center justify-center text-primary shadow-inner">
           <ShoppingBag className="w-10 h-10 stroke-[2.2]" />
         </div>
         <div className="space-y-1">
-          <h3 className="text-xl font-black text-[#E91E63]">Tu carrito está vacío</h3>
+          <h3 className="text-xl font-black text-primary">Tu carrito está vacío</h3>
           <p className="text-xs text-gray-500 max-w-xs font-semibold">
             Aún no agregaste delicias a tu pedido.
           </p>
@@ -27,7 +26,7 @@ export default function CartView({
         <button
           type="button"
           onClick={() => setView('categories')}
-          className="mt-2 py-3 px-6 bg-[#E91E63] hover:bg-[#d81b60] text-white rounded-2xl text-xs font-black shadow-md active:scale-95 transition-transform cursor-pointer"
+          className="mt-2 py-3 px-6 bg-primary hover:bg-primary-dark text-white rounded-2xl text-xs font-black shadow-md active:scale-95 transition-transform cursor-pointer"
         >
           Explorar Categorías
         </button>
@@ -47,9 +46,9 @@ export default function CartView({
         backTitle="Volver al catálogo"
       />
 
-      <div className="bg-white/95 backdrop-blur-sm p-4 rounded-3xl shadow-xl border border-pink-100 flex flex-col gap-3 mb-4 min-w-0">
+      <div className="bg-white/95 backdrop-blur-sm p-4 rounded-3xl shadow-xl border border-primary-clear-b flex flex-col gap-3 mb-4 min-w-0">
         {hasActiveDiscount && (
-          <div className="flex items-center gap-2 bg-pink-50 border border-pink-200/80 px-3 py-2 rounded-xl text-xs text-[#D81B60] font-bold">
+          <div className="flex items-center gap-2 bg-primary-clear border border-primary-clear-b px-3 py-2 rounded-xl text-xs text-primary-dark font-bold">
             <Tag className="w-4 h-4 shrink-0" />
             <span className="truncate">
               ¡{discountSettings.percent}% OFF pagando en {discountSettings.paymentMethod || 'Efectivo'}!
@@ -67,18 +66,18 @@ export default function CartView({
             return (
               <div 
                 key={key} 
-                className="flex items-center justify-between bg-rose-50/50 hover:bg-rose-50 p-2.5 rounded-xl border border-rose-100 transition-colors text-xs min-w-0 gap-2"
+                className="flex items-center justify-between bg-primary-clear p-2.5 rounded-xl border border-primary-clear-b transition-colors text-xs min-w-0 gap-2"
               >
                 <div className="flex-1 min-w-0 leading-tight">
                   <p className="font-extrabold text-gray-800 truncate" title={name}>
-                    <span className="text-[#E91E63] font-black mr-1">{qty}x</span>
+                    <span className="text-primary font-black mr-1">{qty}x</span>
                     {name}
                   </p>
                   {variant && (
                     <p className="text-[10px] text-gray-500 font-medium truncate">{variant}</p>
                   )}
                   {item.filling && (
-                    <p className="text-[10px] text-pink-600 font-semibold truncate">
+                    <p className="text-[10px] text-primary font-semibold truncate">
                       Relleno: {item.filling}
                     </p>
                   )}
@@ -105,17 +104,17 @@ export default function CartView({
         <button
           type="button"
           onClick={() => setView('categories')}
-          className="w-full py-2.5 bg-pink-50 hover:bg-pink-100/70 text-[#E91E63] rounded-xl text-xs font-black flex items-center justify-center gap-1.5 transition-colors cursor-pointer border border-pink-200 active:scale-98"
+          className="w-full py-2.5 bg-primary-clear hover:bg-primary-clear-bg text-primary rounded-xl text-xs font-black flex items-center justify-center gap-1.5 transition-colors cursor-pointer border border-primary-clear-b active:scale-98"
         >
           <PlusCircle className="w-4 h-4 shrink-0" />
           <span>Agregar más productos</span>
         </button>
 
-        <div className="flex justify-between items-center border-t border-pink-100 pt-3">
+        <div className="flex justify-between items-center border-t border-primary-clear-b pt-3">
           <span className="text-xs font-black text-gray-600 uppercase tracking-wider">
             Subtotal Parcial:
           </span>
-          <span className="text-lg font-black text-[#E91E63]">
+          <span className="text-lg font-black text-primary">
             ${subtotal.toLocaleString('es-AR')}
           </span>
         </div>
@@ -124,7 +123,7 @@ export default function CartView({
       <button
         type="button"
         onClick={() => setView('form')}
-        className="w-full py-4 bg-[#E91E63] hover:bg-[#D81B60] text-white rounded-2xl font-black text-sm shadow-lg active:scale-95 transition-transform cursor-pointer flex items-center justify-center gap-2 tracking-wide"
+        className="w-full py-4 bg-primary hover:bg-primary-dark text-white rounded-2xl font-black text-sm shadow-lg active:scale-95 transition-transform cursor-pointer flex items-center justify-center gap-2 tracking-wide"
       >
         <span>Continuar con los Datos del Pedido</span>
         <ArrowRight className="w-4 h-4 stroke-[2.5]" />

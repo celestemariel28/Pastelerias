@@ -72,7 +72,7 @@ export default function CustomCakeView({ setView, onUpdateProductVariants }) {
 
       {loading ? (
         <div className="flex flex-col items-center justify-center py-20 gap-3 text-gray-400">
-          <Loader2 className="w-8 h-8 animate-spin text-[#E91E63]" />
+          <Loader2 className="w-8 h-8 animate-spin text-primary" />
           <span className="text-xs font-semibold">Cargando opciones...</span>
         </div>
       ) : (
@@ -85,7 +85,7 @@ export default function CustomCakeView({ setView, onUpdateProductVariants }) {
 
           {!infoRead ? (
             <div className="bg-gray-50 border-2 border-dashed border-gray-300 rounded-3xl p-8 text-center flex flex-col items-center justify-center gap-3 animate-fadeIn">
-              <div className="w-12 h-12 bg-pink-100/70 text-[#E91E63] rounded-full flex items-center justify-center shadow-inner">
+              <div className="w-12 h-12 bg-primary-clear-bg text-primary rounded-full flex items-center justify-center shadow-inner">
                 <Lock className="w-6 h-6 stroke-[2.2]" />
               </div>
               <h4 className="font-extrabold text-sm text-gray-800">Personalización Bloqueada</h4>

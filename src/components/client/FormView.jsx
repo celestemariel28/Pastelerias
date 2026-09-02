@@ -98,22 +98,22 @@ export default function FormView({
         backTitle="Volver al carrito"
       />
 
-      <form onSubmit={handleSubmit} className="bg-white/95 backdrop-blur-sm p-5 rounded-3xl shadow-xl flex flex-col gap-4 text-gray-800 border border-pink-100">
+      <form onSubmit={handleSubmit} className="bg-white/95 backdrop-blur-sm p-5 rounded-3xl shadow-xl flex flex-col gap-4 text-gray-800 border border-primary-clear-b">
         <div>
-          <label className="text-xs font-bold text-[#D81B60] uppercase block mb-1">Nombre y Apellido *</label>
+          <label className="text-xs font-bold text-primary-dark uppercase block mb-1">Nombre y Apellido *</label>
           <input 
             type="text" 
             name="name" 
             required 
             value={formData.name} 
             onChange={handleChange} 
-            className="w-full bg-rose-50/50 border border-rose-200 rounded-xl py-2 px-3 focus:outline-none focus:ring-2 focus:ring-[#E91E63] text-sm font-semibold" 
+            className="w-full bg-primary-clear border border-primary-clear-b rounded-xl py-2 px-3 focus:outline-none focus:ring-2 focus:ring-primary text-sm font-semibold" 
             placeholder="Ej: Candela Garbini" 
           />
         </div>
 
         <div>
-          <label className="text-xs font-bold text-[#D81B60] uppercase block mb-1">Número de Celular (10 dígitos) *</label>
+          <label className="text-xs font-bold text-primary-dark uppercase block mb-1">Número de Celular (10 dígitos) *</label>
           <input 
             type="text" 
             name="phone" 
@@ -124,18 +124,18 @@ export default function FormView({
               const onlyNums = e.target.value.replace(/[^0-9]/g, '');
               handleChange({ target: { name: 'phone', value: onlyNums } });
             }} 
-            className="w-full bg-rose-50/50 border border-rose-200 rounded-xl py-2 px-3 focus:outline-none focus:ring-2 focus:ring-[#E91E63] font-mono tracking-wider text-sm font-bold" 
+            className="w-full bg-primary-clear border border-primary-clear-b rounded-xl py-2 px-3 focus:outline-none focus:ring-1 focus:ring-primary font-mono tracking-wider text-sm font-bold" 
             placeholder="Ej: 3816554433" 
           />
         </div>
 
         <div>
-          <label className="text-xs font-bold text-[#D81B60] uppercase block mb-1">Forma de Pago</label>
+          <label className="text-xs font-bold text-primary-dark uppercase block mb-1">Forma de Pago</label>
           <select 
             name="paymentMethod" 
             value={formData.paymentMethod} 
             onChange={handleChange} 
-            className="w-full bg-rose-50/50 border border-rose-200 rounded-xl py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-[#E91E63] font-bold text-gray-700 text-sm"
+            className="w-full bg-primary-clear border border-primary-clear-b rounded-xl py-2.5 px-3 focus:outline-none focus:ring-1 focus:ring-primary font-bold text-gray-700 text-sm"
           >
             <option value="Transferencia">Transferencia Bancaria</option>
             <option value="Efectivo">Efectivo (al retirar)</option>
@@ -144,27 +144,27 @@ export default function FormView({
 
         {formData.paymentMethod === 'Efectivo' && (
           <div className="animate-slideDown">
-            <label className="text-xs font-bold text-[#D81B60] uppercase block mb-1">¿Con cuánto vas a abonar?</label>
+            <label className="text-xs font-bold text-primary-dark uppercase block mb-1">¿Con cuánto vas a abonar?</label>
             <input 
               type="number" 
               name="cashAmount" 
               required 
               value={formData.cashAmount} 
               onChange={handleChange} 
-              className="w-full bg-rose-50/50 border border-rose-200 rounded-xl py-2 px-3 focus:outline-none focus:ring-2 focus:ring-[#E91E63] text-sm font-bold text-[#E91E63]" 
+              className="w-full bg-primary-clear border border-primary-clear-b rounded-xl py-2 px-3 focus:outline-none focus:ring-1 focus:ring-primary text-sm font-bold text-primary" 
               placeholder={`Total a pagar: $${totalFinal.toLocaleString('es-AR')}`} 
             />
           </div>
         )}
 
         <div>
-          <label className="text-xs font-bold text-[#D81B60] uppercase block mb-1">Notas o Aclaraciones</label>
+          <label className="text-xs font-bold text-primary-dark uppercase block mb-1">Notas o Aclaraciones</label>
           <textarea 
             name="notes" 
             rows="2" 
             value={formData.notes} 
             onChange={handleChange} 
-            className="w-full bg-rose-50/50 border border-rose-200 rounded-xl py-2 px-3 focus:outline-none focus:ring-2 focus:ring-[#E91E63] resize-none text-xs" 
+            className="w-full bg-primary-clear border border-primary-clear-b rounded-xl py-2 px-3 focus:outline-none focus:ring-1 focus:ring-primary resize-none text-xs" 
             placeholder="Ej: horario de retiro, dedicatoria..." 
           />
         </div>
@@ -182,7 +182,7 @@ export default function FormView({
         <button 
           type="submit" 
           disabled={subtotal <= 0}
-          className="w-full bg-[#E91E63] hover:bg-[#D81B60] text-white py-4 rounded-2xl font-black text-sm shadow-lg active:scale-95 transition-transform tracking-wider cursor-pointer disabled:opacity-50 flex items-center justify-center gap-2"
+          className="w-full bg-primary hover:bg-primary-dark text-primary-dark text-white py-4 rounded-2xl font-black text-sm shadow-lg active:scale-95 transition-transform tracking-wider cursor-pointer disabled:opacity-50 flex items-center justify-center gap-2"
         >
           <svg 
             xmlns="http://www.w3.org/2000/svg" 

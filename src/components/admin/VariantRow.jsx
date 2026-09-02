@@ -10,7 +10,7 @@ export default function VariantRow({ variant, onChange, onRemove, canRemove }) {
         placeholder="Ej: 8 porciones"
         value={variant.label}
         onChange={(e) => onChange(variant.id, 'label', e.target.value)}
-        className="flex-1 min-w-0 px-2.5 sm:px-3 py-2 bg-gray-50 rounded-xl border border-gray-100 text-xs sm:text-sm focus:outline-none focus:border-[#E91E63]"
+        className="flex-1 min-w-0 px-2.5 sm:px-3 py-2 bg-gray-50 rounded-xl border border-gray-100 text-xs sm:text-sm focus:outline-none focus:border-primary"
       />
 
       <input
@@ -21,7 +21,7 @@ export default function VariantRow({ variant, onChange, onRemove, canRemove }) {
         placeholder="$"
         value={variant.price}
         onChange={(e) => onChange(variant.id, 'price', e.target.value)}
-        className="w-16 sm:w-20 px-1.5 sm:px-2 py-2 bg-gray-50 rounded-xl border border-gray-100 text-xs sm:text-sm text-center font-bold text-[#E91E63] focus:outline-none focus:border-[#E91E63] shrink-0"
+        className="w-16 sm:w-20 px-1.5 sm:px-2 py-2 bg-gray-50 rounded-xl border border-gray-100 text-xs sm:text-sm text-center font-bold text-primary focus:outline-none focus:border-primary shrink-0"
         title="Precio"
       />
 
@@ -32,7 +32,7 @@ export default function VariantRow({ variant, onChange, onRemove, canRemove }) {
         placeholder="Stk"
         value={variant.stock}
         onChange={(e) => onChange(variant.id, 'stock', e.target.value)}
-        className="w-12 sm:w-16 px-1 py-2 bg-gray-50 rounded-xl border border-gray-100 text-xs sm:text-sm text-center text-gray-700 focus:outline-none focus:border-[#E91E63] shrink-0"
+        className="w-12 sm:w-16 px-1 py-2 bg-gray-50 rounded-xl border border-gray-100 text-xs sm:text-sm text-center text-gray-700 focus:outline-none focus:border-primary shrink-0"
         title="Stock disponible"
       />
   

@@ -1,5 +1,16 @@
 @import "tailwindcss";
-h2, h3, .text-categori-font, .categ-nombre{
+
+@theme {
+  --color-primary-light: #f8d6e0;
+  --color-primary: #E91E63;
+  --color-primary-dark: #D81B60;
+  --color-primary-clear: #fff7fa;  --color-primary-clear-bg: #fdf2f8; /*  fondos muy suaves */
+  --color-primary-clear-b: #fce7f3b3;/*borde*/
+  --color-primary-categoria-bg:#E94E6340;
+
+}
+
+h2, h3, .text-categori-font, .categ-nombre {
   font-family: 'Shrikhand', cursive, sans-serif !important;
   font-weight: normal;
   letter-spacing: 0.5px;

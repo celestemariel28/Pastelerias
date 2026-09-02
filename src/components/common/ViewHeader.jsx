@@ -15,14 +15,14 @@ export default function ViewHeader({
           <button
             type="button"
             onClick={onBack}
-            className="w-9 h-9 flex items-center justify-center bg-white rounded-full text-[#E91E63] shadow-md active:scale-90 transition-transform cursor-pointer shrink-0"
+            className="w-9 h-9 flex items-center justify-center bg-white rounded-full text-primary shadow-md active:scale-90 transition-transform cursor-pointer shrink-0"
             title={backTitle}
           >
             <ArrowLeft className="w-5 h-5 stroke-[2.5]" />
           </button>
         )}
 
-        <h2 className="text-xl sm:text-2xl font-black text-[#E91E63] capitalize truncate">
+        <h2 className="text-xl sm:text-2xl font-black text-primary capitalize truncate">
           {title}
         </h2>
       </div>

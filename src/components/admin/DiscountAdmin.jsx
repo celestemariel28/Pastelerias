@@ -65,7 +65,7 @@ export default function DiscountAdmin() {
   if (loading) {
     return (
       <div className="flex items-center justify-center p-8 text-gray-400 gap-2">
-        <Loader2 className="w-4 h-4 animate-spin text-[#E91E63]" />
+        <Loader2 className="w-4 h-4 animate-spin text-primary" />
         <span className="text-xs">Cargando promociones...</span>
       </div>
     );
@@ -74,8 +74,8 @@ export default function DiscountAdmin() {
   return (
     <div className="p-4 sm:p-5 bg-white rounded-2xl shadow-sm border border-pink-100 max-w-lg mx-auto flex flex-col gap-4 w-full">
       <div className="flex items-center gap-2">
-        <Percent className="w-4 h-4 text-[#E91E63]" />
-        <h3 className="font-black text-sm sm:text-base text-[#E91E63]">Promoción / Descuento</h3>
+        <Percent className="w-4 h-4 text-primary" />
+        <h3 className="font-black text-sm sm:text-base text-primary">Promoción / Descuento</h3>
       </div>
 
       <form onSubmit={handleSave} className="space-y-4 text-xs">
@@ -84,7 +84,7 @@ export default function DiscountAdmin() {
             type="checkbox"
             checked={isActive}
             onChange={(e) => setIsActive(e.target.checked)}
-            className="w-4 h-4 accent-[#E91E63] cursor-pointer"
+            className="w-4 h-4 accent-primary cursor-pointer"
           />
           <span>Habilitar cartel y descuento promocional</span>
         </label>
@@ -99,7 +99,7 @@ export default function DiscountAdmin() {
                 onClick={() => setPaymentMethod(method)}
                 className={`py-2.5 rounded-xl border-2 font-bold transition-all cursor-pointer ${
                   paymentMethod === method
-                    ? 'border-[#E91E63] bg-pink-50 text-[#E91E63]'
+                    ? 'border-primary bg-pink-50 text-primary'
                     : 'border-gray-200 text-gray-600 bg-white hover:border-pink-200'
                 }`}
               >
@@ -117,7 +117,7 @@ export default function DiscountAdmin() {
             max="100"
             value={percent}
             onChange={(e) => setPercent(e.target.value)}
-            className="w-full bg-rose-50/50 border border-rose-200 rounded-xl px-3 py-2 text-sm font-bold text-[#E91E63] focus:outline-none focus:ring-2 focus:ring-[#E91E63]"
+            className="w-full bg-primary-clear border border-primary-clear-b rounded-xl px-3 py-2 text-sm font-bold text-primary focus:outline-none focus:ring-2 focus:ring-primary"
             placeholder="Ej: 10"
           />
         </div>
@@ -128,7 +128,7 @@ export default function DiscountAdmin() {
             type="text"
             value={bannerText}
             onChange={(e) => setBannerText(e.target.value)}
-            className="w-full bg-rose-50/50 border border-rose-200 rounded-xl px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-[#E91E63]"
+            className="w-full bg-primary-clear border border-primary-clear-b rounded-xl px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-primary"
             placeholder="Ej: ¡10% de descuento abonando en efectivo!"
           />
         </div>
@@ -137,7 +137,7 @@ export default function DiscountAdmin() {
           type="submit"
           disabled={saving}
           className={`w-full py-3 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 active:scale-95 transition-all cursor-pointer shadow-md disabled:opacity-60 ${
-            saved ? 'bg-emerald-600 hover:bg-emerald-700' : 'bg-[#E91E63] hover:bg-[#d81b60]'
+            saved ? 'bg-emerald-600 hover:bg-emerald-700' : 'bg-primary hover:bg-primary-dark'
           }`}
         >
           {saving ? (

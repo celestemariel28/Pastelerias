@@ -116,7 +116,7 @@ function App() {
   // 5. RETORNO PRINCIPAL
   return (
     <div className="min-h-screen bg-rose-50 flex flex-col font-sans selection:bg-[#E91E63] selection:text-white">
-      <div className="w-full max-w-md mx-auto bg-white min-h-screen flex flex-col shadow-2xl relative ">
+      <div className="w-full max-w-md lg:max-w-xl mx-auto bg-white min-h-screen flex flex-col shadow-2xl relative">
         
         {/* Header */}
         {view !== 'admin' && (

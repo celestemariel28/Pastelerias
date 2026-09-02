@@ -82,8 +82,8 @@ export default function FillingsAdmin() {
   };
 
   return (
-    <div className="w-full max-w-lg mx-auto p-3.5 sm:p-4 bg-white rounded-2xl shadow-sm border border-pink-100 flex flex-col h-full min-w-0">
-      <h3 className="text-base sm:text-lg font-black text-[#E91E63] mb-3 truncate">
+    <div className="w-full max-w-lg mx-auto p-3.5 sm:p-4 bg-white rounded-2xl shadow-sm border border-primary-clear-b flex flex-col h-full min-w-0">
+      <h3 className="text-base sm:text-lg font-black text-primary mb-3 truncate">
         Gestión de Rellenos
       </h3>
 
@@ -93,11 +93,11 @@ export default function FillingsAdmin() {
           placeholder="Nombre (ej: OREO, FRUTILLAS...)"
           value={newFillingName}
           onChange={(e) => setNewFillingName(e.target.value)}
-          className="flex-1 min-w-0 bg-rose-50/50 border border-rose-200 rounded-xl px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-[#E91E63]"
+          className="flex-1 min-w-0 bg-primary-clear border border-primary-clear-b rounded-xl px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-primary"
         />
         <button
           type="submit"
-          className="py-2 px-3 sm:px-4 bg-[#E91E63] text-white rounded-xl text-xs font-bold shadow-sm active:scale-95 transition-transform hover:bg-[#d81b60] flex items-center justify-center gap-1.5 cursor-pointer shrink-0"
+          className="py-2 px-3 sm:px-4 bg-primary text-white rounded-xl text-xs font-bold shadow-sm active:scale-95 transition-transform hover:bg-primary-dark flex items-center justify-center gap-1.5 cursor-pointer shrink-0"
           title="Agregar Relleno"
         >
           <PlusCircle className="w-4 h-4 shrink-0" />
@@ -108,7 +108,7 @@ export default function FillingsAdmin() {
       <div className="flex-1 overflow-y-auto pr-1 min-w-0 space-y-2">
         {loading ? (
           <div className="flex items-center justify-center py-6 text-gray-400 gap-2">
-            <Loader2 className="w-4 h-4 animate-spin text-[#E91E63]" />
+            <Loader2 className="w-4 h-4 animate-spin text-primary" />
             <span className="text-xs">Cargando rellenos...</span>
           </div>
         ) : (
@@ -116,7 +116,7 @@ export default function FillingsAdmin() {
             {fillings.map((f) => (
               <div
                 key={f.id}
-                className="flex items-center justify-between p-2.5 sm:p-3 bg-pink-50/30 border border-pink-100 rounded-xl text-xs min-w-0 gap-2"
+                className="flex items-center justify-between p-2.5 sm:p-3 bg-primary-clear border border-primary-clear-b rounded-xl text-xs min-w-0 gap-2"
               >
                 {editingId === f.id ? (
                   <div className="flex items-center gap-1.5 w-full min-w-0">
@@ -124,7 +124,7 @@ export default function FillingsAdmin() {
                       type="text"
                       value={editName}
                       onChange={(e) => setEditName(e.target.value)}
-                      className="flex-1 min-w-0 bg-white border border-[#E91E63] rounded-lg px-2.5 py-1.5 text-xs font-bold text-gray-800 uppercase focus:outline-none"
+                      className="flex-1 min-w-0 bg-white border border-primary rounded-lg px-2.5 py-1.5 text-xs font-bold text-gray-800 uppercase focus:outline-none"
                       autoFocus
                     />
                     <button

@@ -1,4 +1,3 @@
-import React from 'react';
 import { Pencil, Trash2 } from 'lucide-react';
 
 function AdminCategoryList({ categories = [], loading, onEdit, onDelete }) {
@@ -40,7 +39,7 @@ function AdminCategoryList({ categories = [], loading, onEdit, onDelete }) {
             </button>
             <button 
               onClick={() => onDelete(category.id, category.name)} 
-              className="p-2 bg-rose-50 hover:bg-rose-100 text-rose-600 rounded-xl transition-colors" 
+              className="p-2 bg-red-50 hover:bg-red-100 text-rose-600 rounded-xl transition-colors" 
               title="Eliminar categoría"
             >
               <Trash2 className="w-3.5 h-3.5" />

@@ -78,8 +78,8 @@ export default function InfoSlidesAdmin() {
   };
 
   return (
-    <div className="w-full max-w-lg mx-auto p-4 bg-white rounded-2xl shadow-sm border border-pink-100 flex flex-col h-full min-w-0">
-      <h3 className="text-base sm:text-lg font-black text-[#D81B60] mb-4 truncate">
+    <div className="w-full max-w-lg mx-auto p-4 bg-white rounded-2xl shadow-sm border border-primary-clear-b flex flex-col h-full min-w-0">
+      <h3 className="text-base sm:text-lg font-black text-primary-dark mb-4 truncate">
         Información Importante (Carrusel)
       </h3>
 
@@ -89,7 +89,7 @@ export default function InfoSlidesAdmin() {
           placeholder="Título descriptivo (ej: Horarios y demoras)"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          className="w-full bg-rose-50/50 border border-rose-200 rounded-xl px-3 py-2 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#E91E63]"
+          className="w-full bg-primary-clear border border-primary-clear-b rounded-xl px-3 py-2 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-primary"
         />
 
         <ImageUploader
@@ -102,7 +102,7 @@ export default function InfoSlidesAdmin() {
         <button
           type="submit"
           disabled={saving || !imageUrl.trim()}
-          className="w-full bg-[#E91E63] hover:bg-[#D81B60] text-white py-2.5 rounded-xl text-xs sm:text-sm font-bold active:scale-95 transition-all shadow-sm cursor-pointer disabled:opacity-50 flex items-center justify-center gap-1.5"
+          className="w-full bg-primary hover:bg-primary-dark text-white py-2.5 rounded-xl text-xs sm:text-sm font-bold active:scale-95 transition-all shadow-sm cursor-pointer disabled:opacity-50 flex items-center justify-center gap-1.5"
         >
           {saving ? (
             <>
@@ -120,7 +120,7 @@ export default function InfoSlidesAdmin() {
       <div className="flex-1 overflow-y-auto pr-1 min-w-0">
         {loading ? (
           <div className="flex items-center justify-center py-6 text-gray-400 gap-2">
-            <Loader2 className="w-4 h-4 animate-spin text-[#E91E63]" />
+            <Loader2 className="w-4 h-4 animate-spin text-primary" />
             <span className="text-xs">Cargando imágenes...</span>
           </div>
         ) : (
@@ -128,7 +128,7 @@ export default function InfoSlidesAdmin() {
             {slides.map((s, idx) => (
               <div 
                 key={s.id} 
-                className="border border-pink-100 rounded-2xl overflow-hidden shadow-2xs bg-gray-50 flex flex-col justify-between min-w-0"
+                className="border border-primary-clear-b rounded-2xl overflow-hidden shadow-2xs bg-gray-50 flex flex-col justify-between min-w-0"
               >
                 <div className="w-full h-36 bg-white flex items-center justify-center overflow-hidden">
                   <img 

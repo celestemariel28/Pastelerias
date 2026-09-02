@@ -39,7 +39,7 @@ export default function ImageUploader({
 
       <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 my-4">
         {/* Vista previa cuadrada */}
-        <div className="w-24 h-24 rounded-2xl bg-pink-50/60 border-2 border-dashed border-pink-200 flex items-center justify-center overflow-hidden relative shrink-0">
+        <div className="w-24 h-24 rounded-2xl bg-primary-clear border-2 border-dashed border-primary-clear-b flex items-center justify-center overflow-hidden relative shrink-0">
           {value ? (
             <img 
               src={value} 
@@ -47,7 +47,7 @@ export default function ImageUploader({
               className="w-full h-full object-cover" 
             />
           ) : (
-            <ImageIcon className="w-7 h-7 text-pink-300" />
+            <ImageIcon className="w-7 h-7 text-primary-clear-b" />
           )}
 
           {uploading && (
@@ -59,7 +59,7 @@ export default function ImageUploader({
 
         {/* Acciones */}
         <div className="flex flex-col items-center sm:items-start gap-2">
-          <label className="cursor-pointer bg-[#E91E63] hover:bg-[#D81B60] text-white px-3.5 py-2 rounded-xl font-bold text-xs shadow-sm transition-all flex items-center gap-2">
+          <label className="cursor-pointer bg-primary hover:bg-primary-dark text-white px-3.5 py-2 rounded-xl font-bold text-xs shadow-sm transition-all flex items-center gap-2">
             <Upload className="w-4 h-4 shrink-0" />
             <span>{uploading ? 'Subiendo...' : 'Seleccionar foto'}</span>
             <input

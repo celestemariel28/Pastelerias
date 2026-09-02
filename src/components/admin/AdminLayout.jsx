@@ -119,12 +119,12 @@ function AdminLayout({ setView }) {
     <div className="flex-1 p-4 flex flex-col bg-white rounded-3xl max-h-[90vh] overflow-hidden">
       <div className="flex justify-between items-center border-b pb-2 mb-2">
         <div>
-          <h2 className="text-lg font-black text-[#E91E63]">Panel de Control</h2>
+          <h2 className="text-lg font-black text-primary">Panel de Control</h2>
           <p className="text-[10px] text-gray-400">Admin: {user.email || 'Conectada'}</p>
         </div>
         <button 
           onClick={handleLogout} 
-          className="text-xs font-bold text-red-500 bg-red-50 px-3 py-1.5 rounded-xl active:scale-95 transition-transform flex items-center space-x-1 hover:bg-red-100/70 cursor-pointer"
+          className="text-xs font-bold text-primary bg-primary-clear px-3 py-1.5 rounded-xl active:scale-95 transition-transform flex items-center space-x-1 hover:bg-primary-light cursor-pointer"
         >
           <span>Salir</span>
           <LogOut className="w-3.5 h-3.5" />
@@ -134,7 +134,7 @@ function AdminLayout({ setView }) {
       <div className="flex overflow-x-auto no-scrollbar bg-gray-100 p-1 rounded-xl mb-3 gap-1 shrink-0">
         <button 
           onClick={() => setActiveTab('categories')}
-          className={`py-1.5 px-3 flex items-center space-x-1 text-[11px] font-bold rounded-lg transition-all whitespace-nowrap cursor-pointer ${activeTab === 'categories' ? 'bg-white text-[#E91E63] shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
+          className={`py-1.5 px-3 flex items-center space-x-1 text-[11px] font-bold rounded-lg transition-all whitespace-nowrap cursor-pointer ${activeTab === 'categories' ? 'bg-white text-primary shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
         >
           <Tag className="w-3.5 h-3.5" />
           <span>Categorías</span>
@@ -142,7 +142,7 @@ function AdminLayout({ setView }) {
 
         <button 
           onClick={() => setActiveTab('products')}
-          className={`py-1.5 px-3 flex items-center space-x-1 text-[11px] font-bold rounded-lg transition-all whitespace-nowrap cursor-pointer ${activeTab === 'products' ? 'bg-white text-[#E91E63] shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
+          className={`py-1.5 px-3 flex items-center space-x-1 text-[11px] font-bold rounded-lg transition-all whitespace-nowrap cursor-pointer ${activeTab === 'products' ? 'bg-white text-primary shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
         >
           <CakeSlice className="w-3.5 h-3.5" />
           <span>Productos</span>
@@ -150,7 +150,7 @@ function AdminLayout({ setView }) {
 
         <button 
           onClick={() => setActiveTab('coverings')}
-          className={`py-1.5 px-3 flex items-center space-x-1 text-[11px] font-bold rounded-lg transition-all whitespace-nowrap cursor-pointer ${activeTab === 'coverings' ? 'bg-white text-[#E91E63] shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
+          className={`py-1.5 px-3 flex items-center space-x-1 text-[11px] font-bold rounded-lg transition-all whitespace-nowrap cursor-pointer ${activeTab === 'coverings' ? 'bg-white text-primary shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
         >
           <Shield className="w-3.5 h-3.5" />
           <span>Coberturas</span>
@@ -158,7 +158,7 @@ function AdminLayout({ setView }) {
 
         <button 
           onClick={() => setActiveTab('fillings')}
-          className={`py-1.5 px-3 flex items-center space-x-1 text-[11px] font-bold rounded-lg transition-all whitespace-nowrap cursor-pointer ${activeTab === 'fillings' ? 'bg-white text-[#E91E63] shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
+          className={`py-1.5 px-3 flex items-center space-x-1 text-[11px] font-bold rounded-lg transition-all whitespace-nowrap cursor-pointer ${activeTab === 'fillings' ? 'bg-white text-primary shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
         >
           <Sparkles className="w-3.5 h-3.5" />
           <span>Rellenos</span>
@@ -166,7 +166,7 @@ function AdminLayout({ setView }) {
 
         <button 
           onClick={() => setActiveTab('customCakes')}
-          className={`py-1.5 px-3 flex items-center space-x-1 text-[11px] font-bold rounded-lg transition-all whitespace-nowrap cursor-pointer ${activeTab === 'customCakes' ? 'bg-white text-[#E91E63] shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
+          className={`py-1.5 px-3 flex items-center space-x-1 text-[11px] font-bold rounded-lg transition-all whitespace-nowrap cursor-pointer ${activeTab === 'customCakes' ? 'bg-white text-primary shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
         >
           <Layers className="w-3.5 h-3.5" />
           <span>Precios Tortas</span>
@@ -174,7 +174,7 @@ function AdminLayout({ setView }) {
 
         <button 
           onClick={() => setActiveTab('promos')}
-          className={`py-1.5 px-3 flex items-center space-x-1 text-[11px] font-bold rounded-lg transition-all whitespace-nowrap cursor-pointer ${activeTab === 'promos' ? 'bg-white text-[#E91E63] shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
+          className={`py-1.5 px-3 flex items-center space-x-1 text-[11px] font-bold rounded-lg transition-all whitespace-nowrap cursor-pointer ${activeTab === 'promos' ? 'bg-white text-primary shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
         >
           <Percent className="w-3.5 h-3.5" />
           <span>Promos</span>
@@ -182,7 +182,7 @@ function AdminLayout({ setView }) {
 
         <button 
           onClick={() => setActiveTab('slides')}
-          className={`py-1.5 px-3 flex items-center space-x-1 text-[11px] font-bold rounded-lg transition-all whitespace-nowrap cursor-pointer ${activeTab === 'slides' ? 'bg-white text-[#E91E63] shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
+          className={`py-1.5 px-3 flex items-center space-x-1 text-[11px] font-bold rounded-lg transition-all whitespace-nowrap cursor-pointer ${activeTab === 'slides' ? 'bg-white text-primary shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
         >
           <Image className="w-3.5 h-3.5" />
           <span>Info</span>
@@ -196,7 +196,7 @@ function AdminLayout({ setView }) {
             <div className="mb-3">
               <button 
                 onClick={() => { setProductToEdit(null); setIsModalOpen(true); }} 
-                className="w-full py-2.5 bg-[#E91E63] text-white rounded-xl text-xs font-bold shadow-sm active:scale-95 transition-transform hover:bg-[#d81b60] flex items-center justify-center space-x-1.5 cursor-pointer"
+                className="w-full py-2.5 bg-primary text-white rounded-xl text-xs font-bold shadow-sm active:scale-95 transition-transform hover:bg-primary-dark flex items-center justify-center space-x-1.5 cursor-pointer"
               >
                 <PlusCircle className="w-5 h-5"/> 
                 <span>Agregar Nuevo Producto</span>

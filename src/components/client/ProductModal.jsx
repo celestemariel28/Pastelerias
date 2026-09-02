@@ -108,24 +108,24 @@ export default function ProductModal({
         <button
           type="button"
           onClick={onClose}
-          className="absolute top-4 right-4 w-7 h-7 bg-pink-100 text-[#E91E63] rounded-full flex items-center justify-center hover:bg-pink-200 font-bold cursor-pointer active:scale-90 transition-transform z-10"
+          className="absolute top-4 right-4 w-7 h-7 bg-primary-clear text-primary rounded-full flex items-center justify-center border border-primary hover:bg-primary-clear-bg font-bold cursor-pointer active:scale-90 transition-transform z-10"
           title="Cerrar"
         >
           <X className="w-4 h-4" />
         </button>
 
         {/* Cabecera */}
-        <div className="flex gap-3 items-center pr-8 pb-3 border-b border-pink-50">
+        <div className="flex gap-3 items-center pr-8 pb-3 border-b border-primary-clear-b">
           <img
             src={product.image || product.image_url}
             alt={product.name}
             className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl object-cover shrink-0 shadow-xs"
           />
           <div className="flex-1 min-w-0">
-            <h3 className="font-extrabold text-sm sm:text-base text-[#E91E63] leading-tight truncate" title={product.name}>
+            <h3 className="font-extrabold text-sm sm:text-base text-primary leading-tight truncate" title={product.name}>
               {product.name}
             </h3>
-            <p className="text-[10px] text-pink-600 font-semibold mt-0.5">
+            <p className="text-[10px] text-primary-dark font-semibold mt-0.5">
               Seleccioná las porciones:
             </p>
           </div>
@@ -134,7 +134,7 @@ export default function ProductModal({
         {/* Cuerpo */}
         <div className="flex-1 overflow-y-auto py-3 space-y-3 min-w-0 pr-0.5">
           {product.description && (
-            <div className="bg-pink-50/50 rounded-xl p-2.5 border border-pink-100">
+            <div className="bg-primary-clear rounded-xl p-2.5 border border-primary-clear-b">
               <p className="text-xs text-gray-600 leading-relaxed">
                 {product.description}
               </p>
@@ -155,14 +155,14 @@ export default function ProductModal({
           </div>
 
           {requiresFilling && (
-            <div className="bg-pink-50/70 p-3 rounded-2xl border border-pink-100">
-              <label className="text-xs font-black text-[#D81B60] uppercase block mb-1 tracking-wide">
+            <div className="bg-primary-clear p-3 rounded-2xl border border-primary-clear-b">
+              <label className="text-xs font-black text-primary-dark uppercase block mb-1 tracking-wide">
                 Elegí tu segundo relleno:
               </label>
               <select
                 value={selectedFilling || (availableFillings[0]?.name || '')}
                 onChange={(e) => setSelectedFilling(e.target.value)}
-                className="w-full bg-white border border-pink-200 rounded-xl py-2 px-3 text-xs font-bold text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#E91E63] cursor-pointer"
+                className="w-full bg-white border border-primary-clear-b rounded-xl py-2 px-3 text-xs font-bold text-gray-800 focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer"
               >
                 {availableFillings.map((f) => (
                   <option key={f.id} value={f.name}>
@@ -179,7 +179,7 @@ export default function ProductModal({
           <button
             type="button"
             onClick={handleConfirm}
-            className="w-full py-3 bg-[#E91E63] hover:bg-[#d81b60] text-white font-bold rounded-2xl shadow-sm text-xs sm:text-sm flex items-center justify-center gap-2 active:scale-95 transition-all cursor-pointer"
+            className="w-full py-3 bg-primary hover:bg-primary-dark text-white font-bold rounded-2xl shadow-sm text-xs sm:text-sm flex items-center justify-center gap-2 active:scale-95 transition-all cursor-pointer"
           >
             <span>Confirmar selección</span>
           </button>

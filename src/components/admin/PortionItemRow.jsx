@@ -29,14 +29,14 @@ export default function PortionItemRow({ item, onUpdate, onDelete }) {
   };
 
   return (
-    <div className="p-2.5 sm:p-3 bg-pink-50/30 border border-pink-100 rounded-xl text-xs min-w-0">
+    <div className="p-2.5 sm:p-3 bg-primary-clear border border-primary-clear-b rounded-xl text-xs min-w-0">
       {isEditing ? (
         <div className="flex items-center gap-1.5 w-full min-w-0">
           <input
             type="text"
             value={editLabel}
             onChange={(e) => setEditLabel(e.target.value)}
-            className="flex-1 min-w-0 bg-white border border-[#E91E63] rounded-lg px-2 py-1.5 text-xs font-bold text-gray-800 focus:outline-none"
+            className="flex-1 min-w-0 bg-white border border-primary rounded-lg px-2 py-1.5 text-xs font-bold text-gray-800 focus:outline-none"
             placeholder="Porción"
             autoFocus
           />
@@ -46,7 +46,7 @@ export default function PortionItemRow({ item, onUpdate, onDelete }) {
             step="any"
             value={editPrice}
             onChange={(e) => setEditPrice(e.target.value)}
-            className="w-16 sm:w-20 bg-white border border-[#E91E63] rounded-lg px-2 py-1.5 text-xs font-bold text-[#E91E63] focus:outline-none shrink-0"
+            className="w-16 sm:w-20 bg-white border border-primary rounded-lg px-2 py-1.5 text-xs font-bold text-primary focus:outline-none shrink-0"
             placeholder="Precio"
           />
           <button
@@ -76,7 +76,7 @@ export default function PortionItemRow({ item, onUpdate, onDelete }) {
           </span>
 
           <div className="flex items-center gap-2 sm:gap-2.5 shrink-0">
-            <span className="font-black text-[#E91E63]">
+            <span className="font-black text-primary">
               ${Number(item.price).toLocaleString('es-AR')}
             </span>
 
