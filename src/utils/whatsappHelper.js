@@ -1,3 +1,4 @@
+import { STORE_CONFIG } from '../config/store';
 import { supabase } from '../supabaseClient';
 
 export const enviarPedidoWhatsApp = async ({ 
@@ -114,7 +115,7 @@ export const enviarPedidoWhatsApp = async ({
   });
 
   // 4. Armado del mensaje general
-  let message = `🧁 *Nuevo Pedido - Candela Garbini*\n`;
+  let message = `🧁 *Nuevo Pedido - ${STORE_CONFIG.name}*\n`;
   message += `🔖 *NRO:* #${orderNumber}\n\n`;
   message += `👤 *Cliente:* ${formData.name}\n`;
   message += `📱 *Celular:* ${formData.phone}\n`;
@@ -149,7 +150,7 @@ export const enviarPedidoWhatsApp = async ({
     message += `\n📸 *Foto del diseño:* A continuación te adjunto la imagen o foto de referencia del diseño que me gustaría para mi pedido.`;
   }
 
-  const phoneNumber = import.meta.env.VITE_WHATSAPP_PHONE || "549381000000";
+  const phoneNumber = STORE_CONFIG.phone || "5493815689490";
   
   const encodedMessage = encodeURIComponent(message.normalize('NFC'));
   const whatsappUrl = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodedMessage}`;

@@ -8,9 +8,13 @@ export default {
     extend: {
       colors: {
         primary: {
-          light: '#f8d6e0',
-          DEFAULT: '#E91E63',
-          dark: '#D81B60',
+          light: 'var(--color-primary-light)',
+          DEFAULT: 'var(--color-primary)',
+          dark: 'var(--color-primary-dark)',
+          clear: 'var(--color-primary-clear)',
+          'clear-bg': 'var(--color-primary-clear-bg)',
+          'clear-b': 'var(--color-primary-clear-b)',
+          'categoria-bg': 'var(--color-primary-categoria-bg)',
         },
       },
     },

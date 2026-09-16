@@ -1,5 +1,6 @@
 import React from 'react';
 import { ShoppingBag } from 'lucide-react';
+import { STORE_CONFIG } from '../../config/store';
 
 export default function Header({ view, searchQuery, setSearchQuery, setView, cart = {} }) {
   const handleGoHome = () => {
@@ -25,8 +26,8 @@ export default function Header({ view, searchQuery, setSearchQuery, setView, car
         title="Volver al inicio"
       >
         <img 
-          src="/logo.png" 
-          alt="Logo Candela Garbini" 
+          src={STORE_CONFIG.logo} 
+          alt={`Logo ${STORE_CONFIG.name}`} 
           className="w-full h-full object-cover object-center"
         />
       </button>
