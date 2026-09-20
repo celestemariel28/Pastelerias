@@ -1,22 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from './supabaseClient';
 import { useAppData } from './hooks/useAppData'; 
+import { useStoreAuth } from './hooks/useStoreAuth';
 import Header from './components/client/Header';
 import CategoriesView from './components/client/CategoriesView';
 import ProductsView from './components/client/ProductsView';
 import FormView from './components/client/FormView';
-import Login from './components/admin/Login'; 
-import AdminLayout from './components/admin/AdminLayout';
+import AdminGuard from './components/admin/AdminGuard';
 import CustomCakeView from './components/client/CustomCakeView';
 import CartView from './components/client/CartView';
 import BottomNav from './components/client/BottomNav';
 import CustomCakeInfoCard from './components/client/CustomCakeInfoCard'; 
 import { CakeSlice } from 'lucide-react';
 
-function App() {
+export default function App() {
   const storeId = import.meta.env.VITE_STORE_ID;
 
-  // 1. STATES
+  // Estados de vistas y filtros
   const [view, setView] = useState('categories');
   const [selectedCategoryId, setSelectedCategoryId] = useState(null);
   const [selectedCategoryName, setSelectedCategoryName] = useState('');
@@ -30,9 +30,11 @@ function App() {
     bannerText: ''
   });
 
+  // Hooks modulares
   const { products = [], loading, filteredCategories = [], filteredProducts = [] } = useAppData(searchQuery, selectedCategoryId);
+  const authState = useStoreAuth(storeId);
 
-  // 2. USEEFFECT
+  // Configuración de descuentos
   useEffect(() => {
     async function loadDiscount() {
       try {
@@ -54,80 +56,58 @@ function App() {
         console.error('Error cargando configuración:', err);
       }
     }
-    if (storeId) {
-      loadDiscount();
-    }
+    if (storeId) loadDiscount();
   }, [storeId]);
 
-  // 3. FUNCIONES AUXILIARES
-  const calculateSubtotal = () => {
-    return Object.values(cart).reduce((total, item) => {
-      const qty = parseInt(item?.quantity, 10) || 0;
-      const price = parseFloat(item?.price) || 0;
-      return total + (qty * price);
-    }, 0);
-  };
+  // Manejadores del Carrito
+  const calculateSubtotal = () =>
+    Object.values(cart).reduce((acc, item) => acc + (parseInt(item?.quantity, 10) || 0) * (parseFloat(item?.price) || 0), 0);
 
   const handleUpdateProductVariantsInCart = (productId, selectedVariants) => {
-    setCart((prevCart) => {
-      const nextCart = { ...prevCart };
-
-      Object.keys(nextCart).forEach((key) => {
-        if (String(nextCart[key].productId) === String(productId)) {
-          delete nextCart[key];
-        }
+    setCart((prev) => {
+      const next = { ...prev };
+      Object.keys(next).forEach((key) => {
+        if (String(next[key].productId) === String(productId)) delete next[key];
       });
-
-      selectedVariants.forEach((variant) => {
-        const qty = parseInt(variant.quantity, 10) || 0;
+      selectedVariants.forEach((v) => {
+        const qty = parseInt(v.quantity, 10) || 0;
         if (qty > 0) {
-          const varId = String(variant.variantId || variant.id || 'default');
-          const itemKey = `${productId}_${varId}`;
-          
-          nextCart[itemKey] = {
-            ...variant,
+          const varId = String(v.variantId || v.id || 'default');
+          next[`${productId}_${varId}`] = {
+            ...v,
             productId: String(productId),
             variantId: varId,
             quantity: qty,
-            price: parseFloat(variant.price) || 0
+            price: parseFloat(v.price) || 0
           };
         }
       });
-
-      return { ...nextCart };
+      return next;
     });
   };
 
   const handleRemoveItemFromCart = (cartKey) => {
-    setCart((prevCart) => {
-      const nextCart = { ...prevCart };
-      delete nextCart[cartKey];
-      return nextCart;
+    setCart((prev) => {
+      const next = { ...prev };
+      delete next[cartKey];
+      return next;
     });
   };
 
-  const isCartEmpty = Object.keys(cart).length === 0;
-
-  // 4. RETORNO CONDICIONAL
   if (loading) {
     return (
       <div className="min-h-screen bg-primary-clear-bg flex flex-col items-center justify-center gap-3">
         <div className="w-16 h-16 rounded-full bg-primary-clear flex items-center justify-center shadow-md animate-bounce">
           <CakeSlice className="w-8 h-8 text-primary" />
         </div>
-        <p className="text-primary font-black text-2xl tracking-wide animate-pulse">
-          Cargando dulces...
-        </p>
+        <p className="text-primary font-black text-2xl tracking-wide animate-pulse">Cargando dulces...</p>
       </div>
     );
   }
 
-  // 5. RETORNO PRINCIPAL
   return (
     <div className="min-h-screen bg-primary-clear-bg flex flex-col font-sans selection:bg-primary selection:text-white">
       <div className="w-full max-w-md lg:max-w-xl mx-auto bg-white min-h-screen flex flex-col shadow-2xl relative">
-        
-        {/* Header */}
         {view !== 'admin' && (
           <Header 
             view={view} 
@@ -139,7 +119,6 @@ function App() {
           />
         )}
 
-        {/* Vistas Principales */}
         {view === 'categories' && (
           <CategoriesView 
             filteredCategories={filteredCategories}
@@ -152,10 +131,7 @@ function App() {
         )}
 
         {view === 'custom-cake' && (
-          <CustomCakeView 
-            setView={setView}
-            onUpdateProductVariants={handleUpdateProductVariantsInCart}
-          />
+          <CustomCakeView setView={setView} onUpdateProductVariants={handleUpdateProductVariantsInCart} />
         )}
 
         {view === 'products' && (
@@ -168,7 +144,7 @@ function App() {
             onUpdateProductVariants={handleUpdateProductVariantsInCart}
             calculateSubtotal={calculateSubtotal}
             onRemoveItemFromCart={handleRemoveItemFromCart} 
-            isCartEmpty={isCartEmpty}
+            isCartEmpty={Object.keys(cart).length === 0}
             discountSettings={discountSettings}
           />
         )}
@@ -196,10 +172,9 @@ function App() {
         )}
 
         {view === 'admin' && (
-          <AdminLayout setView={setView} />
+          <AdminGuard authState={authState} setView={setView} />
         )}
 
-        {/* Modal de Información Útil */}
         {isInfoModalOpen && (
           <CustomCakeInfoCard 
             isOpen={isInfoModalOpen} 
@@ -211,7 +186,6 @@ function App() {
           />
         )}
 
-        {/* Barra de Navegación Inferior (Footer) */}
         {view !== 'admin' && (
           <BottomNav 
             view={view} 
@@ -220,10 +194,7 @@ function App() {
             onOpenInfoModal={() => setIsInfoModalOpen(true)}
           />
         )}
-
       </div>
     </div>
   );
 }
-
-export default App;
