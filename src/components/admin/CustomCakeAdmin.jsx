@@ -5,6 +5,8 @@ import PortionFilters from './PortionFilters';
 import PortionItemRow from './PortionItemRow';
 
 export default function CustomCakeAdmin() {
+  const storeId = import.meta.env.VITE_STORE_ID;
+
   const [portions, setPortions] = useState([]);
   const [coverings, setCoverings] = useState([]);
   const [activeType, setActiveType] = useState('buttercream');
@@ -14,10 +16,23 @@ export default function CustomCakeAdmin() {
   const [loading, setLoading] = useState(true);
 
   const fetchCoveringsAndPortions = async () => {
+    if (!storeId) {
+      setLoading(false);
+      return;
+    }
+
     setLoading(true);
     const [covRes, portionsRes] = await Promise.all([
-      supabase.from('cake_coverings').select('*').order('id', { ascending: true }),
-      supabase.from('custom_cake_portions').select('*').order('price', { ascending: true })
+      supabase
+        .from('cake_coverings')
+        .select('*')
+        .eq('store_id', storeId)
+        .order('id', { ascending: true }),
+      supabase
+        .from('custom_cake_portions')
+        .select('*')
+        .eq('store_id', storeId)
+        .order('price', { ascending: true })
     ]);
 
     if (covRes.data && covRes.data.length > 0) {
@@ -33,13 +48,18 @@ export default function CustomCakeAdmin() {
 
   useEffect(() => {
     fetchCoveringsAndPortions();
-  }, []);
+  }, [storeId]);
 
   const handleAddPortion = async (e) => {
     e.preventDefault();
     const priceNum = parseFloat(newPrice);
     if (!newLabel.trim() || isNaN(priceNum) || priceNum <= 0) {
       alert("Por favor ingresá un nombre y un precio válido mayor a 0.");
+      return;
+    }
+
+    if (!storeId) {
+      alert('Error: no se detectó el identificador de la tienda (VITE_STORE_ID).');
       return;
     }
 
@@ -50,7 +70,8 @@ export default function CustomCakeAdmin() {
           cake_type: activeType.toLowerCase(),
           floors: parseInt(activeFloors, 10),
           label: newLabel.trim(),
-          price: priceNum
+          price: priceNum,
+          store_id: storeId
         }
       ])
       .select();
@@ -66,10 +87,17 @@ export default function CustomCakeAdmin() {
 
   const handleUpdatePortion = async (id, label, price) => {
     const priceNum = parseFloat(price);
-    const { error } = await supabase
+
+    let query = supabase
       .from('custom_cake_portions')
       .update({ label, price: priceNum })
       .eq('id', id);
+
+    if (storeId) {
+      query = query.eq('store_id', storeId);
+    }
+
+    const { error } = await query;
 
     if (!error) {
       setPortions(prev =>
@@ -84,7 +112,13 @@ export default function CustomCakeAdmin() {
 
   const handleDeletePortion = async (id, label) => {
     if (window.confirm(`¿Seguro que deseas eliminar "${label}"?`)) {
-      const { error } = await supabase.from('custom_cake_portions').delete().eq('id', id);
+      let query = supabase.from('custom_cake_portions').delete().eq('id', id);
+
+      if (storeId) {
+        query = query.eq('store_id', storeId);
+      }
+
+      const { error } = await query;
       if (!error) {
         setPortions(prev => prev.filter(p => p.id !== id));
       } else {

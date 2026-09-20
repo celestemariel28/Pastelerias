@@ -13,6 +13,8 @@ export default function FormView({
   PRODUCTS_MOCK = [],
   discountSettings = { isActive: false, percent: 0, paymentMethod: 'Efectivo' }
 }) {
+  const storeId = import.meta.env.VITE_STORE_ID;
+
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
@@ -42,7 +44,7 @@ export default function FormView({
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (subtotal <= 0) {
@@ -70,7 +72,8 @@ export default function FormView({
       }
     }
 
-    enviarPedidoWhatsApp({ 
+    await enviarPedidoWhatsApp({ 
+      storeId,
       formData: { ...formData, phone: cleanPhone }, 
       cart, 
       subtotal, 
@@ -182,7 +185,7 @@ export default function FormView({
         <button 
           type="submit" 
           disabled={subtotal <= 0}
-          className="w-full bg-primary hover:bg-primary-dark text-primary-dark text-white py-4 rounded-2xl font-black text-sm shadow-lg active:scale-95 transition-transform tracking-wider cursor-pointer disabled:opacity-50 flex items-center justify-center gap-2"
+          className="w-full bg-primary hover:bg-primary-dark text-white py-4 rounded-2xl font-black text-sm shadow-lg active:scale-95 transition-transform tracking-wider cursor-pointer disabled:opacity-50 flex items-center justify-center gap-2"
         >
           <svg 
             xmlns="http://www.w3.org/2000/svg" 

@@ -4,6 +4,8 @@ import { Trash2, Loader2, Plus } from 'lucide-react';
 import ImageUploader from '../common/ImageUploader'; 
 
 export default function InfoSlidesAdmin() {
+  const storeId = import.meta.env.VITE_STORE_ID;
+
   const [slides, setSlides] = useState([]);
   const [title, setTitle] = useState('');
   const [imageUrl, setImageUrl] = useState('');
@@ -11,18 +13,25 @@ export default function InfoSlidesAdmin() {
   const [saving, setSaving] = useState(false);
 
   const fetchSlides = async () => {
+    if (!storeId) {
+      setLoading(false);
+      return;
+    }
+
     setLoading(true);
     const { data, error } = await supabase
       .from('info_slides')
       .select('*')
+      .eq('store_id', storeId)
       .order('order_index', { ascending: true });
+
     if (!error) setSlides(data || []);
     setLoading(false);
   };
 
   useEffect(() => {
     fetchSlides();
-  }, []);
+  }, [storeId]);
 
   const handleAddSlide = async (e) => {
     e.preventDefault();
@@ -31,11 +40,17 @@ export default function InfoSlidesAdmin() {
       return;
     }
 
+    if (!storeId) {
+      alert("Error: no se detectó el identificador de la tienda (VITE_STORE_ID).");
+      return;
+    }
+
     setSaving(true);
     const newSlide = { 
       title: title.trim() || 'Información', 
       image_url: imageUrl.trim(), 
-      order_index: slides.length 
+      order_index: slides.length,
+      store_id: storeId // 👈 Asigna el slide a la tienda activa
     };
 
     const { data, error } = await supabase
@@ -69,7 +84,13 @@ export default function InfoSlidesAdmin() {
       }
     }
 
-    const { error } = await supabase.from('info_slides').delete().eq('id', id);
+    let query = supabase.from('info_slides').delete().eq('id', id);
+
+    if (storeId) {
+      query = query.eq('store_id', storeId);
+    }
+
+    const { error } = await query;
     if (!error) {
       setSlides((prev) => prev.filter((s) => s.id !== id));
     } else {
@@ -117,6 +138,7 @@ export default function InfoSlidesAdmin() {
           )}
         </button>
       </form>
+
       <div className="flex-1 overflow-y-auto pr-1 min-w-0">
         {loading ? (
           <div className="flex items-center justify-center py-6 text-gray-400 gap-2">

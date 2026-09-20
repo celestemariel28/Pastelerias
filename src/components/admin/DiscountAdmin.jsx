@@ -3,6 +3,8 @@ import { supabase } from '../../supabaseClient';
 import { Percent, Sparkles, Check, Loader2 } from 'lucide-react';
 
 export default function DiscountAdmin() {
+  const storeId = import.meta.env.VITE_STORE_ID;
+
   const [isActive, setIsActive] = useState(false);
   const [percent, setPercent] = useState(10);
   const [paymentMethod, setPaymentMethod] = useState('Efectivo');
@@ -13,10 +15,15 @@ export default function DiscountAdmin() {
 
   useEffect(() => {
     async function loadSettings() {
+      if (!storeId) {
+        setLoading(false);
+        return;
+      }
+
       const { data, error } = await supabase
         .from('store_settings')
         .select('*')
-        .eq('id', 1)
+        .eq('store_id', storeId)
         .maybeSingle();
 
       if (error) {
@@ -30,10 +37,16 @@ export default function DiscountAdmin() {
       setLoading(false);
     }
     loadSettings();
-  }, []);
+  }, [storeId]);
 
   const handleSave = async (e) => {
     e.preventDefault();
+
+    if (!storeId) {
+      alert('Error: no se detectó el identificador de la tienda (VITE_STORE_ID).');
+      return;
+    }
+
     const percentNum = parseFloat(percent);
 
     if (isActive && (isNaN(percentNum) || percentNum <= 0 || percentNum > 100)) {
@@ -44,13 +57,17 @@ export default function DiscountAdmin() {
     setSaving(true);
     setSaved(false);
 
-    const { error } = await supabase.from('store_settings').upsert({
-      id: 1,
-      is_active: isActive,
-      discount_percent: isNaN(percentNum) ? 0 : percentNum,
-      target_payment_method: paymentMethod,
-      banner_text: bannerText.trim()
-    });
+    // Guardado o actualización filtrado por tienda
+    const { error } = await supabase.from('store_settings').upsert(
+      {
+        store_id: storeId,
+        is_active: isActive,
+        discount_percent: isNaN(percentNum) ? 0 : percentNum,
+        target_payment_method: paymentMethod,
+        banner_text: bannerText.trim()
+      },
+      { onConflict: 'store_id' }
+    );
 
     setSaving(false);
 
@@ -72,14 +89,14 @@ export default function DiscountAdmin() {
   }
 
   return (
-    <div className="p-4 sm:p-5 bg-white rounded-2xl shadow-sm border border-pink-100 max-w-lg mx-auto flex flex-col gap-4 w-full">
+    <div className="p-4 sm:p-5 bg-white rounded-2xl shadow-sm border border-primary-clear-b max-w-lg mx-auto flex flex-col gap-4 w-full">
       <div className="flex items-center gap-2">
         <Percent className="w-4 h-4 text-primary" />
         <h3 className="font-black text-sm sm:text-base text-primary">Promoción / Descuento</h3>
       </div>
 
       <form onSubmit={handleSave} className="space-y-4 text-xs">
-        <label className="flex items-center gap-2.5 font-bold text-gray-700 bg-pink-50/50 p-3 rounded-xl border border-pink-100 cursor-pointer select-none">
+        <label className="flex items-center gap-2.5 font-bold text-gray-700 bg-primary-clear p-3 rounded-xl border border-primary-clear-b cursor-pointer select-none">
           <input
             type="checkbox"
             checked={isActive}
@@ -99,8 +116,8 @@ export default function DiscountAdmin() {
                 onClick={() => setPaymentMethod(method)}
                 className={`py-2.5 rounded-xl border-2 font-bold transition-all cursor-pointer ${
                   paymentMethod === method
-                    ? 'border-primary bg-pink-50 text-primary'
-                    : 'border-gray-200 text-gray-600 bg-white hover:border-pink-200'
+                    ? 'border-primary bg-primary-clear text-primary'
+                    : 'border-gray-200 text-gray-600 bg-white hover:border-primary-clear-b'
                 }`}
               >
                 {method}

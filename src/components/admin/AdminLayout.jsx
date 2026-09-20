@@ -16,6 +16,8 @@ const SESSION_DURATION_MS = 20 * 60 * 1000;
 
 function AdminLayout({ setView }) {
   const navigate = useNavigate();
+  const storeId = import.meta.env.VITE_STORE_ID;
+
   const [user, setUser] = useState(null);
   const [products, setProducts] = useState([]);
   const [loadingProducts, setLoadingProducts] = useState(false);
@@ -54,10 +56,12 @@ function AdminLayout({ setView }) {
   };
 
   const fetchAdminCategories = async () => {
+    if (!storeId) return;
     try {
       const { data, error } = await supabase
         .from('categories')
         .select('*')
+        .eq('store_id', storeId)
         .order('name', { ascending: true });
 
       if (error) throw error;
@@ -68,11 +72,13 @@ function AdminLayout({ setView }) {
   };
 
   const fetchAdminProducts = async () => {
+    if (!storeId) return;
     try {
       setLoadingProducts(true);
       const { data, error } = await supabase
         .from('products')
         .select('*')
+        .eq('store_id', storeId)
         .order('id', { ascending: false });
         
       if (error) throw error;
@@ -95,16 +101,20 @@ function AdminLayout({ setView }) {
   };
 
   useEffect(() => {
-    if (user) {
+    if (user && storeId) {
       fetchAdminProducts();
       fetchAdminCategories();
     }
-  }, [user]);
+  }, [user, storeId]);
 
   const handleDeleteProduct = async (id, name) => {
     if (!window.confirm(`¿Estás segura de que querés eliminar permanentemente "${name}"?`)) return;
     try {
-      const { error } = await supabase.from('products').delete().eq('id', id);
+      let query = supabase.from('products').delete().eq('id', id);
+      if (storeId) {
+        query = query.eq('store_id', storeId);
+      }
+      const { error } = await query;
       if (error) throw error;
       alert('Producto eliminado correctamente.');
       fetchAdminProducts();

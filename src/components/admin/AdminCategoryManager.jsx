@@ -4,9 +4,12 @@ import { Tag, FolderEdit } from 'lucide-react';
 import ImageUploader from '../common/ImageUploader'; 
 
 function AdminCategoryManager({ onRefreshProducts, onCategoryChanged }) {
+  const storeId = import.meta.env.VITE_STORE_ID;
+
   const { categories, formData, setters, loading, actions } = useCategoryForm({ 
     onRefreshProducts, 
-    onCategoryChanged 
+    onCategoryChanged,
+    storeId // 👈 Pasamos el identificador de tienda al hook
   });
   
   const { newCategoryName, newCategoryImage, categoryToEdit } = formData;

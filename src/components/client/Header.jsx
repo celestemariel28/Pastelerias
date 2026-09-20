@@ -1,8 +1,40 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { ShoppingBag } from 'lucide-react';
-import { STORE_CONFIG } from '../../config/store';
+import { supabase } from '../../supabaseClient';
 
 export default function Header({ view, searchQuery, setSearchQuery, setView, cart = {} }) {
+  const [storeInfo, setStoreInfo] = useState({
+    name: 'Pastelería',
+    logo_url: '/logo.png'
+  });
+
+  const storeId = import.meta.env.VITE_STORE_ID;
+
+  useEffect(() => {
+    async function loadStoreBrand() {
+      if (!storeId) return;
+
+      try {
+        const { data } = await supabase
+          .from('stores')
+          .select('name, logo_url')
+          .eq('id', storeId)
+          .single();
+
+        if (data) {
+          setStoreInfo({
+            name: data.name || 'Pastelería',
+            logo_url: data.logo_url || '/logo.png'
+          });
+        }
+      } catch (err) {
+        console.error('Error obteniendo datos de cabecera:', err);
+      }
+    }
+
+    loadStoreBrand();
+  }, [storeId]);
+
   const handleGoHome = () => {
     setView('categories');
     setSearchQuery('');
@@ -26,8 +58,8 @@ export default function Header({ view, searchQuery, setSearchQuery, setView, car
         title="Volver al inicio"
       >
         <img 
-          src={STORE_CONFIG.logo} 
-          alt={`Logo ${STORE_CONFIG.name}`} 
+          src={storeInfo.logo_url} 
+          alt={`Logo ${storeInfo.name}`} 
           className="w-full h-full object-cover object-center"
         />
       </button>

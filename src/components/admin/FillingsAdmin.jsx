@@ -3,6 +3,8 @@ import { supabase } from '../../supabaseClient';
 import { PlusCircle, Pencil, Trash2, Check, X, Loader2 } from 'lucide-react';
 
 export default function FillingsAdmin() {
+  const storeId = import.meta.env.VITE_STORE_ID;
+
   const [fillings, setFillings] = useState([]);
   const [newFillingName, setNewFillingName] = useState('');
   const [editingId, setEditingId] = useState(null);
@@ -10,34 +12,46 @@ export default function FillingsAdmin() {
   const [loading, setLoading] = useState(true);
 
   const fetchFillings = async () => {
+    if (!storeId) {
+      setLoading(false);
+      return;
+    }
+
     setLoading(true);
     const { data, error } = await supabase
-      .from('fillings')
+      .from('fillings') // o 'fillings' según el nombre exacto en tu BD
       .select('*')
+      .eq('store_id', storeId)
       .order('id', { ascending: true });
+
     if (!error) setFillings(data || []);
     setLoading(false);
   };
 
   useEffect(() => {
     fetchFillings();
-  }, []);
+  }, [storeId]);
 
   const handleAddFilling = async (e) => {
     e.preventDefault();
     const cleanName = newFillingName.trim().toUpperCase();
     if (!cleanName) return;
 
+    if (!storeId) {
+      alert('Error: no se detectó el identificador de la tienda (VITE_STORE_ID).');
+      return;
+    }
+
     const { data, error } = await supabase
-      .from('fillings')
-      .insert([{ name: cleanName, available: true }])
+      .from('filling')
+      .insert([{ name: cleanName, available: true, store_id: storeId }])
       .select();
 
     if (!error && data) {
       setFillings((prev) => [...prev, ...data]);
       setNewFillingName('');
     } else {
-      alert("Error al agregar relleno: " + (error?.message || 'Error desconocido'));
+      alert('Error al agregar relleno: ' + (error?.message || 'Error desconocido'));
     }
   };
 
@@ -45,25 +59,38 @@ export default function FillingsAdmin() {
     const cleanName = editName.trim().toUpperCase();
     if (!cleanName) return;
 
-    const { error } = await supabase
+    let query = supabase
       .from('fillings')
       .update({ name: cleanName })
       .eq('id', id);
+
+    if (storeId) {
+      query = query.eq('store_id', storeId);
+    }
+
+    const { error } = await query;
 
     if (!error) {
       setFillings((prev) => prev.map((f) => (f.id === id ? { ...f, name: cleanName } : f)));
       setEditingId(null);
     } else {
-      alert("Error al actualizar relleno: " + error.message);
+      alert('Error al actualizar relleno: ' + error.message);
     }
   };
 
   const handleToggleAvailable = async (id, currentStatus) => {
     const newStatus = !currentStatus;
-    const { error } = await supabase
+
+    let query = supabase
       .from('fillings')
       .update({ available: newStatus })
       .eq('id', id);
+
+    if (storeId) {
+      query = query.eq('store_id', storeId);
+    }
+
+    const { error } = await query;
 
     if (!error) {
       setFillings((prev) => prev.map((f) => (f.id === id ? { ...f, available: newStatus } : f)));
@@ -72,11 +99,17 @@ export default function FillingsAdmin() {
 
   const handleDeleteFilling = async (id, name) => {
     if (window.confirm(`¿Seguro que deseas eliminar permanentemente el relleno "${name}"?`)) {
-      const { error } = await supabase.from('fillings').delete().eq('id', id);
+      let query = supabase.from('fillings').delete().eq('id', id);
+
+      if (storeId) {
+        query = query.eq('store_id', storeId);
+      }
+
+      const { error } = await query;
       if (!error) {
         setFillings((prev) => prev.filter((f) => f.id !== id));
       } else {
-        alert("Error al eliminar: " + error.message);
+        alert('Error al eliminar: ' + error.message);
       }
     }
   };

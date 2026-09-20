@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '../supabaseClient';
 
-export function useCategoryForm({ onRefreshProducts, onCategoryChanged }) {
+export function useCategoryForm({ onRefreshProducts, onCategoryChanged, storeId }) {
+  const activeStoreId = storeId || import.meta.env.VITE_STORE_ID;
+
   const [categories, setCategories] = useState([]);
   const [newCategoryName, setNewCategoryName] = useState('');
   const [newCategoryImage, setNewCategoryImage] = useState('');
@@ -9,11 +11,14 @@ export function useCategoryForm({ onRefreshProducts, onCategoryChanged }) {
   const [categoryToEdit, setCategoryToEdit] = useState(null);
 
   const fetchCategories = async () => {
+    if (!activeStoreId) return;
+
     try {
       setLoading(true);
       const { data, error } = await supabase
         .from('categories')
         .select('*')
+        .eq('store_id', activeStoreId)
         .order('name', { ascending: true });
 
       if (error) throw error;
@@ -26,8 +31,10 @@ export function useCategoryForm({ onRefreshProducts, onCategoryChanged }) {
   };
 
   useEffect(() => {
-    fetchCategories();
-  }, []);
+    if (activeStoreId) {
+      fetchCategories();
+    }
+  }, [activeStoreId]);
 
   const handleStartEdit = (category) => {
     setCategoryToEdit(category);
@@ -45,22 +52,32 @@ export function useCategoryForm({ onRefreshProducts, onCategoryChanged }) {
     e.preventDefault();
     if (!newCategoryName.trim()) return;
 
+    if (!activeStoreId) {
+      alert('Error: no se detectó el identificador de la tienda (VITE_STORE_ID).');
+      return;
+    }
+
     try {
       setLoading(true);
       const imagenFinal = newCategoryImage.trim() || 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=500';
       
-      // 🔠 Convertir a mayúsculas automáticamente
       const categoryData = { 
         name: newCategoryName.trim().toUpperCase(), 
-        image_url: imagenFinal 
+        image_url: imagenFinal,
+        store_id: activeStoreId // 👈 Asigna la categoría a la pastelería activa
       };
 
       if (categoryToEdit) {
-        const { error } = await supabase
+        let updateQuery = supabase
           .from('categories')
           .update(categoryData)
           .eq('id', categoryToEdit.id);
 
+        if (activeStoreId) {
+          updateQuery = updateQuery.eq('store_id', activeStoreId);
+        }
+
+        const { error } = await updateQuery;
         if (error) throw error;
         alert('¡Categoría actualizada con éxito!');
       } else {
@@ -88,7 +105,13 @@ export function useCategoryForm({ onRefreshProducts, onCategoryChanged }) {
     if (!window.confirm(`¿Estás segura de eliminar la categoría "${name}"?`)) return;
 
     try {
-      const { error } = await supabase.from('categories').delete().eq('id', id);
+      let deleteQuery = supabase.from('categories').delete().eq('id', id);
+
+      if (activeStoreId) {
+        deleteQuery = deleteQuery.eq('store_id', activeStoreId);
+      }
+
+      const { error } = await deleteQuery;
       if (error) throw error;
 
       alert('Categoría eliminada correctamente.');

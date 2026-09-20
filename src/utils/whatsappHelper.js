@@ -1,7 +1,7 @@
-import { STORE_CONFIG } from '../config/store';
 import { supabase } from '../supabaseClient';
 
 export const enviarPedidoWhatsApp = async ({ 
+  storeId,
   formData, 
   cart, 
   subtotal, 
@@ -11,10 +11,32 @@ export const enviarPedidoWhatsApp = async ({
   totalFinal, 
   PRODUCTS_MOCK 
 }) => {
+  const activeStoreId = storeId || import.meta.env.VITE_STORE_ID;
   const orderNumber = `PED-${Math.floor(1000 + Math.random() * 9000)}`;
 
+  let storeName = 'Pastelería';
+  let phoneNumber = '5493815689490';
+
+  // 1. Obtener datos de la tienda activa
   try {
-    // 1. Agrupar los productos regulares para descontar stock
+    if (activeStoreId) {
+      const { data: storeData } = await supabase
+        .from('stores')
+        .select('name, whatsapp_phone')
+        .eq('id', activeStoreId)
+        .single();
+
+      if (storeData) {
+        storeName = storeData.name || storeName;
+        phoneNumber = storeData.whatsapp_phone || phoneNumber;
+      }
+    }
+  } catch (err) {
+    console.error("Error al obtener la configuración de la tienda:", err);
+  }
+
+  try {
+    // 2. Agrupar los productos regulares para descontar stock
     const itemsPorProducto = {};
     Object.values(cart).forEach(item => {
       const qty = parseInt(item?.quantity, 10) || 0;
@@ -29,13 +51,18 @@ export const enviarPedidoWhatsApp = async ({
       }
     });
 
-    // 2. Descontar stock en Supabase
+    // 3. Descontar stock en Supabase filtrado por tienda
     for (const [productId, items] of Object.entries(itemsPorProducto)) {
-      const { data: currentProduct, error: fetchError } = await supabase
+      let query = supabase
         .from('products')
         .select('variante')
-        .eq('id', productId)
-        .single();
+        .eq('id', productId);
+
+      if (activeStoreId) {
+        query = query.eq('store_id', activeStoreId);
+      }
+
+      const { data: currentProduct, error: fetchError } = await query.single();
 
       if (fetchError || !currentProduct) {
         console.error("Error al obtener stock del producto:", fetchError);
@@ -61,10 +88,16 @@ export const enviarPedidoWhatsApp = async ({
         return v;
       });
 
-      const { error: updateError } = await supabase
+      let updateQuery = supabase
         .from('products')
         .update({ variante: variantesActualizadas })
         .eq('id', productId);
+
+      if (activeStoreId) {
+        updateQuery = updateQuery.eq('store_id', activeStoreId);
+      }
+
+      const { error: updateError } = await updateQuery;
 
       if (updateError) {
         console.error("Error al actualizar stock:", updateError);
@@ -74,7 +107,7 @@ export const enviarPedidoWhatsApp = async ({
     console.error("Error al procesar el descuento de stock:", err);
   }
 
-  // 3. Generar la lista de productos
+  // 4. Generar la lista de productos
   let productsListText = '';
   let requiereFotoDiseno = false;
 
@@ -114,8 +147,8 @@ export const enviarPedidoWhatsApp = async ({
     }
   });
 
-  // 4. Armado del mensaje general
-  let message = `🧁 *Nuevo Pedido - ${STORE_CONFIG.name}*\n`;
+  // 5. Armado del mensaje
+  let message = `🧁 *Nuevo Pedido - ${storeName}*\n`;
   message += `🔖 *NRO:* #${orderNumber}\n\n`;
   message += `👤 *Cliente:* ${formData.name}\n`;
   message += `📱 *Celular:* ${formData.phone}\n`;
@@ -150,10 +183,9 @@ export const enviarPedidoWhatsApp = async ({
     message += `\n📸 *Foto del diseño:* A continuación te adjunto la imagen o foto de referencia del diseño que me gustaría para mi pedido.`;
   }
 
-  const phoneNumber = STORE_CONFIG.phone || "5493815689490";
-  
+  const cleanTargetPhone = phoneNumber.replace(/[^0-9]/g, '');
   const encodedMessage = encodeURIComponent(message.normalize('NFC'));
-  const whatsappUrl = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodedMessage}`;
+  const whatsappUrl = `https://api.whatsapp.com/send?phone=${cleanTargetPhone}&text=${encodedMessage}`;
 
   window.open(whatsappUrl, '_blank');
 };

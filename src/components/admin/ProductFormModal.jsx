@@ -18,11 +18,14 @@ export default function ProductFormModal({
   onSaveSuccess,
   categories = []
 }) {
+  const storeId = import.meta.env.VITE_STORE_ID;
+
   const { formData, setters, loading, guardarProducto } = useProductForm(
     productToEdit,
     isOpen,
     onClose,
-    onSaveSuccess
+    onSaveSuccess,
+    storeId // 👈 Pasamos el storeId al hook de guardado
   );
 
   const [variants, setVariants] = useState([createDefaultVariant()]);

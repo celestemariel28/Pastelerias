@@ -1,15 +1,36 @@
 @import "tailwindcss";
 
-@theme {
+:root {
+  /* Valores por defecto (fallback si la base de datos tarda o no define color) */
   --color-primary-light: #cda7fa;
-  --color-primary: #630192 ;
+  --color-primary: #630192;
   --color-primary-dark: #ae0da9;
   --color-primary-clear: #f9f2ff;
-  --color-primary-clear-bg: #fcf7ff; /*  fondos muy suaves */
-  --color-primary-clear-b:  #7b5bfa;/*borde*/
-  --color-primary-categoria-bg:#f425cb40;
-
+  --color-primary-clear-bg: #fcf7ff; /* fondos muy suaves */
+  --color-primary-clear-b: #7b5bfa;  /* borde */
+  --color-primary-categoria-bg: #f425cb40;
 }
+
+@theme {
+  --color-primary-light: var(--color-primary-light);
+  --color-primary: var(--color-primary);
+  --color-primary-dark: var(--color-primary-dark);
+  --color-primary-clear: var(--color-primary-clear);
+  --color-primary-clear-bg: var(--color-primary-clear-bg);
+  --color-primary-clear-b: var(--color-primary-clear-b);
+  --color-primary-categoria-bg: var(--color-primary-categoria-bg);
+}
+
+/* @theme {
+  --color-primary-light: #f8d6e0; 
+  --color-primary: #E91E63; 
+  --color-primary-dark: #D81B60; 
+  --color-primary-clear: #fff7fa; 
+  --color-primary-clear-bg: #fdf2f8; /* fondos muy suaves */ 
+  /* --color-primary-clear-b: #fce7f3b3; /*borde*/ 
+  /* --color-primary-categoria-bg:#E94E6340; */ 
+
+/* } */ 
 
 h2, h3, .text-categori-font, .categ-nombre {
   font-family: 'Shrikhand', cursive, sans-serif !important;

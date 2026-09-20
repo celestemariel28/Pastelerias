@@ -9,6 +9,7 @@ export default function ImageUploader({
   label = 'Foto' 
 }) {
   const [uploading, setUploading] = useState(false);
+  const storeId = import.meta.env.VITE_STORE_ID;
 
   const handleFileChange = async (e) => {
     const file = e.target.files?.[0];
@@ -16,16 +17,17 @@ export default function ImageUploader({
 
     try {
       setUploading(true);
-      // Sube a Supabase y pasa la subcarpeta correspondiente
-      const publicUrl = await uploadProductImage(file, folder);
-      onChange(publicUrl); // Actualiza el estado en el componente padre
+      // Organizamos la ruta dentro del bucket como "storeId/subcarpeta"
+      const targetPath = storeId ? `${storeId}/${folder}` : folder;
+      const publicUrl = await uploadProductImage(file, targetPath);
+      onChange(publicUrl);
     } catch (err) {
-    console.error('Error detallado de Supabase:', err);
-    alert(`Error al subir la imagen: ${err.message || 'Error desconocido'}`);
+      console.error('Error detallado de Supabase:', err);
+      alert(`Error al subir la imagen: ${err.message || 'Error desconocido'}`);
     } finally {
-    setUploading(false);
+      setUploading(false);
     }
-    };
+  };
 
   const handleRemove = () => {
     onChange('');
@@ -38,7 +40,7 @@ export default function ImageUploader({
       </label>
 
       <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 my-4">
-        {/* Vista previa cuadrada */}
+        {/* Vista previa */}
         <div className="w-24 h-24 rounded-2xl bg-primary-clear border-2 border-dashed border-primary-clear-b flex items-center justify-center overflow-hidden relative shrink-0">
           {value ? (
             <img 
@@ -57,9 +59,9 @@ export default function ImageUploader({
           )}
         </div>
 
-        {/* Acciones */}
+        {/* Botones de acción */}
         <div className="flex flex-col items-center sm:items-start gap-2">
-          <label className="cursor-pointer bg-primary hover:bg-primary-dark text-white px-3.5 py-2 rounded-xl font-bold text-xs shadow-sm transition-all flex items-center gap-2">
+          <label className="cursor-pointer bg-primary hover:bg-primary-dark text-white px-3.5 py-2 rounded-xl font-bold text-xs shadow-sm active:scale-95 transition-all flex items-center gap-2">
             <Upload className="w-4 h-4 shrink-0" />
             <span>{uploading ? 'Subiendo...' : 'Seleccionar foto'}</span>
             <input
@@ -75,7 +77,7 @@ export default function ImageUploader({
             <button
               type="button"
               onClick={handleRemove}
-              className="text-xs font-semibold text-gray-400 hover:text-red-500 flex items-center justify-center gap-1 transition-colors px-1 cursor-pointer"
+              className="text-xs font-semibold text-gray-400 hover:text-red-500 flex items-center justify-center gap-1 transition-colors px-1 cursor-pointer active:scale-90"
             >
               <Trash2 className="w-3.5 h-3.5" />
               <span>Quitar imagen</span>

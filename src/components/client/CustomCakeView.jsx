@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../../supabaseClient';
-import { Lock, ArrowLeft, Loader2 } from 'lucide-react';
+import { Lock, Loader2 } from 'lucide-react';
 import CustomCakeInfoCard from './CustomCakeInfoCard';
 import CustomCakeForm from './CustomCakeForm';
 import ViewHeader from '../common/ViewHeader';
@@ -13,16 +13,41 @@ export default function CustomCakeView({ setView, onUpdateProductVariants }) {
   const [infoSlides, setInfoSlides] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const storeId = import.meta.env.VITE_STORE_ID;
+
   useEffect(() => {
     async function loadAllData() {
+      if (!storeId) {
+        setLoading(false);
+        return;
+      }
+
       try {
         setLoading(true);
 
         const [slidesRes, coveringsRes, portionsRes, fillingsRes] = await Promise.all([
-          supabase.from('info_slides').select('*').order('order_index', { ascending: true }),
-          supabase.from('cake_coverings').select('*').eq('available', true).order('id', { ascending: true }),
-          supabase.from('custom_cake_portions').select('*').order('price', { ascending: true }),
-          supabase.from('fillings').select('*').eq('available', true).order('name', { ascending: true })
+          supabase
+            .from('info_slides')
+            .select('*')
+            .eq('store_id', storeId)
+            .order('order_index', { ascending: true }),
+          supabase
+            .from('cake_coverings') // Si en tu BD la creaste como cake_covering o cake_coverings
+            .select('*')
+            .eq('store_id', storeId)
+            .eq('available', true)
+            .order('id', { ascending: true }),
+          supabase
+            .from('custom_cake_portions')
+            .select('*')
+            .eq('store_id', storeId)
+            .order('price', { ascending: true }),
+          supabase
+            .from('filling') // Si en tu BD la creaste como filling o fillings
+            .select('*')
+            .eq('store_id', storeId)
+            .eq('available', true)
+            .order('name', { ascending: true })
         ]);
 
         if (slidesRes.data) setInfoSlides(slidesRes.data);
@@ -35,8 +60,9 @@ export default function CustomCakeView({ setView, onUpdateProductVariants }) {
         setLoading(false);
       }
     }
+
     loadAllData();
-  }, []);
+  }, [storeId]);
 
   const handleCustomCakeSubmit = ({ floors, covering, portion, filling }) => {
     const titleType = `TORTA PERSONALIZADA DE ${floors} ${floors === 1 ? 'PISO' : 'PISOS'} (${covering})`;
@@ -57,13 +83,11 @@ export default function CustomCakeView({ setView, onUpdateProductVariants }) {
       onUpdateProductVariants(customProductId, [customItem]);
     }
 
-    // Redirige al carrito para que BottomNav active el icono correspondiente
     setView('cart');
   };
 
   return (
     <main className="flex-1 p-4 max-w-md mx-auto w-full pb-24 animate-fadeIn">
-      {/* Encabezado */}
       <ViewHeader
         title="Tortas Personalizadas"
         onBack={() => setView('categories')}

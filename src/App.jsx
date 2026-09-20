@@ -14,13 +14,15 @@ import CustomCakeInfoCard from './components/client/CustomCakeInfoCard';
 import { CakeSlice } from 'lucide-react';
 
 function App() {
-  // 1. TODOS LOS STATES PRIMERO ARRIBA
+  const storeId = import.meta.env.VITE_STORE_ID;
+
+  // 1. STATES
   const [view, setView] = useState('categories');
   const [selectedCategoryId, setSelectedCategoryId] = useState(null);
   const [selectedCategoryName, setSelectedCategoryName] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const [cart, setCart] = useState({});
-  const [isInfoModalOpen, setIsInfoModalOpen] = useState(false); // 👈 Estado para abrir/cerrar el modal de info
+  const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
   const [discountSettings, setDiscountSettings] = useState({
     isActive: false,
     percent: 0,
@@ -30,11 +32,16 @@ function App() {
 
   const { products = [], loading, filteredCategories = [], filteredProducts = [] } = useAppData(searchQuery, selectedCategoryId);
 
-  // 2. TODOS LOS USEEFFECT
+  // 2. USEEFFECT
   useEffect(() => {
     async function loadDiscount() {
       try {
-        const { data } = await supabase.from('store_settings').select('*').eq('id', 1).single();
+        const { data } = await supabase
+          .from('store_settings')
+          .select('*')
+          .eq('store_id', storeId)
+          .maybeSingle();
+
         if (data && data.is_active) {
           setDiscountSettings({
             isActive: true,
@@ -47,8 +54,10 @@ function App() {
         console.error('Error cargando configuración:', err);
       }
     }
-    loadDiscount();
-  }, []);
+    if (storeId) {
+      loadDiscount();
+    }
+  }, [storeId]);
 
   // 3. FUNCIONES AUXILIARES
   const calculateSubtotal = () => {
@@ -99,14 +108,14 @@ function App() {
 
   const isCartEmpty = Object.keys(cart).length === 0;
 
-  // 4. RETORNO CONDICIONAL (después de todos los hooks)
+  // 4. RETORNO CONDICIONAL
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#FFE9EF] flex flex-col items-center justify-center gap-3">
-        <div className="w-16 h-16 rounded-full bg-pink-100 flex items-center justify-center shadow-md animate-bounce">
-          <CakeSlice className="w-8 h-8 text-[#E91E63]" />
+      <div className="min-h-screen bg-primary-clear-bg flex flex-col items-center justify-center gap-3">
+        <div className="w-16 h-16 rounded-full bg-primary-clear flex items-center justify-center shadow-md animate-bounce">
+          <CakeSlice className="w-8 h-8 text-primary" />
         </div>
-        <p className="text-[#E91E63] font-black text-2xl tracking-wide animate-pulse">
+        <p className="text-primary font-black text-2xl tracking-wide animate-pulse">
           Cargando dulces...
         </p>
       </div>
@@ -115,7 +124,7 @@ function App() {
 
   // 5. RETORNO PRINCIPAL
   return (
-    <div className="min-h-screen bg-rose-50 flex flex-col font-sans selection:bg-[#E91E63] selection:text-white">
+    <div className="min-h-screen bg-primary-clear-bg flex flex-col font-sans selection:bg-primary selection:text-white">
       <div className="w-full max-w-md lg:max-w-xl mx-auto bg-white min-h-screen flex flex-col shadow-2xl relative">
         
         {/* Header */}

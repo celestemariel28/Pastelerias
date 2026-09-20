@@ -1,3 +1,4 @@
+import React from 'react';
 import { Pencil, Trash2 } from 'lucide-react';
 
 function AdminCategoryList({ categories = [], loading, onEdit, onDelete }) {
@@ -20,7 +21,7 @@ function AdminCategoryList({ categories = [], loading, onEdit, onDelete }) {
             <img 
               src={category.image_url || 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=500'} 
               alt={category.name} 
-              className="w-10 h-10 object-cover rounded-xl shadow-sm bg-white" 
+              className="w-10 h-10 object-cover rounded-xl shadow-sm bg-white shrink-0" 
             />
             <div className="truncate">
               <h4 className="text-xs font-bold text-gray-800 truncate">
@@ -29,20 +30,22 @@ function AdminCategoryList({ categories = [], loading, onEdit, onDelete }) {
             </div>
           </div>
 
-          <div className="flex space-x-1.5">
+          <div className="flex space-x-1.5 shrink-0">
             <button 
+              type="button"
               onClick={() => onEdit(category)} 
-              className="p-2 bg-amber-50 hover:bg-amber-100 text-amber-600 rounded-xl transition-colors" 
+              className="p-2 bg-amber-50 hover:bg-amber-100 text-amber-600 rounded-xl transition-all cursor-pointer active:scale-90" 
               title="Editar categoría"
             >
               <Pencil className="w-3.5 h-3.5" /> 
             </button>
             <button 
+              type="button"
               onClick={() => onDelete(category.id, category.name)} 
-              className="p-2 bg-red-50 hover:bg-red-100 text-rose-600 rounded-xl transition-colors" 
+              className="p-2 bg-red-50 hover:bg-red-100 text-rose-600 rounded-xl transition-all cursor-pointer active:scale-90" 
               title="Eliminar categoría"
             >
-              <Trash2 className="w-3.5 h-3.5" />
+              <Trash2 className="w-3.5 h-3.5" /> 
             </button>
           </div>
         </div>

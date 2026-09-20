@@ -3,6 +3,8 @@ import { supabase } from '../../supabaseClient';
 import { PlusCircle, Pencil, Trash2, Check, X, Loader2 } from 'lucide-react';
 
 export default function CoveringsAdmin() {
+  const storeId = import.meta.env.VITE_STORE_ID;
+
   const [coverings, setCoverings] = useState([]);
   const [newCoveringName, setNewCoveringName] = useState('');
   const [editingId, setEditingId] = useState(null);
@@ -10,26 +12,39 @@ export default function CoveringsAdmin() {
   const [loading, setLoading] = useState(true);
 
   const fetchCoverings = async () => {
+    if (!storeId) {
+      setLoading(false);
+      return;
+    }
+
     setLoading(true);
     const { data, error } = await supabase
       .from('cake_coverings')
       .select('*')
+      .eq('store_id', storeId)
       .order('id', { ascending: true });
+
     if (!error) setCoverings(data || []);
     setLoading(false);
   };
 
   useEffect(() => {
     fetchCoverings();
-  }, []);
+  }, [storeId]);
 
   const handleAddCovering = async (e) => {
     e.preventDefault();
-    if (!newCoveringName.trim()) return;
+    const cleanName = newCoveringName.trim().toUpperCase();
+    if (!cleanName) return;
+
+    if (!storeId) {
+      alert('Error: no se detectó el identificador de la tienda (VITE_STORE_ID).');
+      return;
+    }
 
     const { error } = await supabase
       .from('cake_coverings')
-      .insert([{ name: newCoveringName.trim().toUpperCase(), available: true }]);
+      .insert([{ name: cleanName, available: true, store_id: storeId }]);
 
     if (!error) {
       setNewCoveringName('');
@@ -40,11 +55,19 @@ export default function CoveringsAdmin() {
   };
 
   const handleUpdateName = async (id) => {
-    if (!editName.trim()) return;
-    const { error } = await supabase
+    const cleanName = editName.trim().toUpperCase();
+    if (!cleanName) return;
+
+    let query = supabase
       .from('cake_coverings')
-      .update({ name: editName.trim().toUpperCase() })
+      .update({ name: cleanName })
       .eq('id', id);
+
+    if (storeId) {
+      query = query.eq('store_id', storeId);
+    }
+
+    const { error } = await query;
 
     if (!error) {
       setEditingId(null);
@@ -55,17 +78,29 @@ export default function CoveringsAdmin() {
   };
 
   const handleToggleAvailable = async (id, currentStatus) => {
-    const { error } = await supabase
+    let query = supabase
       .from('cake_coverings')
       .update({ available: !currentStatus })
       .eq('id', id);
+
+    if (storeId) {
+      query = query.eq('store_id', storeId);
+    }
+
+    const { error } = await query;
 
     if (!error) fetchCoverings();
   };
 
   const handleDeleteCovering = async (id, name) => {
     if (window.confirm(`¿Seguro que deseas eliminar permanentemente la cobertura "${name}"?`)) {
-      const { error } = await supabase.from('cake_coverings').delete().eq('id', id);
+      let query = supabase.from('cake_coverings').delete().eq('id', id);
+
+      if (storeId) {
+        query = query.eq('store_id', storeId);
+      }
+
+      const { error } = await query;
       if (!error) fetchCoverings();
     }
   };
