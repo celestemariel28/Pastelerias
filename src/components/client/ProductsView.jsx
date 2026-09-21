@@ -20,20 +20,25 @@ export default function ProductsView({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [availableFillings, setAvailableFillings] = useState([]);
 
+  const storeId = import.meta.env.VITE_STORE_ID;
+
   useEffect(() => {
     async function loadFillings() {
+      if (!storeId) return;
+
       const { data } = await supabase
         .from('fillings')
         .select('*')
+        .eq('store_id', storeId) // 👈 Filtro por la tienda activa
         .eq('available', true)
         .order('name', { ascending: true });
 
-      if (data && data.length > 0) {
+      if (data) {
         setAvailableFillings(data);
       }
     }
     loadFillings();
-  }, []);
+  }, [storeId]);
 
   const getVariantQuantityInCart = (productId, variantId) => {
     const foundItem = Object.values(cart).find(

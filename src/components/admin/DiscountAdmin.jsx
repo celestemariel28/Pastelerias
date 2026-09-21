@@ -57,17 +57,16 @@ export default function DiscountAdmin() {
     setSaving(true);
     setSaved(false);
 
-    // Guardado o actualización filtrado por tienda
-    const { error } = await supabase.from('store_settings').upsert(
-      {
+    // Al ser store_id la Primary Key, el upsert actualiza si existe o inserta si no
+    const { error } = await supabase
+      .from('store_settings')
+      .upsert({
         store_id: storeId,
         is_active: isActive,
         discount_percent: isNaN(percentNum) ? 0 : percentNum,
         target_payment_method: paymentMethod,
         banner_text: bannerText.trim()
-      },
-      { onConflict: 'store_id' }
-    );
+      });
 
     setSaving(false);
 

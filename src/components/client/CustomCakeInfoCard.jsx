@@ -12,6 +12,7 @@ export default function CustomCakeInfoCard({
   const [internalModalOpen, setInternalModalOpen] = useState(false);
   const [slides, setSlides] = useState(initialSlides);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const storeId = import.meta.env.VITE_STORE_ID;
 
   const isControlled = typeof isOpen === 'boolean';
   const showModal = isControlled ? isOpen : internalModalOpen;
@@ -31,10 +32,14 @@ export default function CustomCakeInfoCard({
     }
 
     async function fetchSlides() {
+      if (!storeId) return;
+
       try {
         const { data, error } = await supabase
           .from('info_slides')
-          .select('*');
+          .select('*')
+          .eq('store_id', storeId) // 👈 Solo trae los de esta pastelería
+          .order('order_index', { ascending: true });
 
         if (!error && data) {
           setSlides(data);
@@ -43,8 +48,9 @@ export default function CustomCakeInfoCard({
         console.error('Info slides no disponibles:', err);
       }
     }
+
     fetchSlides();
-  }, [initialSlides]);
+  }, [initialSlides, storeId]);
 
   const handleNext = () => {
     if (slides.length === 0) return;

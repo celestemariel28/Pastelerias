@@ -32,10 +32,9 @@ export default function CustomCakeView({ setView, onUpdateProductVariants }) {
             .eq('store_id', storeId)
             .order('order_index', { ascending: true }),
           supabase
-            .from('cake_coverings') // Si en tu BD la creaste como cake_covering o cake_coverings
+            .from('cake_coverings')
             .select('*')
             .eq('store_id', storeId)
-            .eq('available', true)
             .order('id', { ascending: true }),
           supabase
             .from('custom_cake_portions')
@@ -43,10 +42,9 @@ export default function CustomCakeView({ setView, onUpdateProductVariants }) {
             .eq('store_id', storeId)
             .order('price', { ascending: true }),
           supabase
-            .from('filling') // Si en tu BD la creaste como filling o fillings
+            .from('fillings') // 👈 Corregido a 'fillings' en plural
             .select('*')
             .eq('store_id', storeId)
-            .eq('available', true)
             .order('name', { ascending: true })
         ]);
 

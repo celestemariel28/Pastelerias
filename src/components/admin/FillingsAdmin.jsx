@@ -43,7 +43,7 @@ export default function FillingsAdmin() {
     }
 
     const { data, error } = await supabase
-      .from('filling')
+      .from('fillings')
       .insert([{ name: cleanName, available: true, store_id: storeId }])
       .select();
 
