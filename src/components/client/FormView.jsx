@@ -111,7 +111,7 @@ export default function FormView({
             value={formData.name} 
             onChange={handleChange} 
             className="w-full bg-primary-clear border border-primary-clear-b rounded-xl py-2 px-3 focus:outline-none focus:ring-2 focus:ring-primary text-sm font-semibold" 
-            placeholder="Ej: Candela Garbini" 
+            placeholder="Ej: Nombre Apellido" 
           />
         </div>
 
