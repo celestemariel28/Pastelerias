@@ -20,6 +20,8 @@ export default function CategoriesView({
     }
   };
 
+  const isTotalOdd = filteredCategories.length % 2 !== 0;
+
   return (
     <main className="flex-1 p-4 max-w-2xl mx-auto w-full pb-24 animate-fadeIn">
       <HeroCarousel discountSettings={discountSettings} />
@@ -31,27 +33,34 @@ export default function CategoriesView({
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        {filteredCategories.map((cat) => (
-          <button
-            key={cat.id}
-            type="button"
-            onClick={() => handleSelectCategory(cat)}
-            className="group w-full h-32 sm:h-36 rounded-2xl overflow-hidden relative flex items-center justify-center cursor-pointer shadow-sm active:scale-95 transition-all duration-200 border border-primary-clear-b"
-          >
-            <img
-              src={cat.image || cat.image_url}
-              alt={cat.name}
-              className="absolute inset-0 w-full h-full object-cover blur-[1.5px] scale-105 group-hover:scale-115 transition-transform duration-500 ease-out"
-            />
+        {filteredCategories.map((cat, idx) => {
+          const isLastItem = idx === filteredCategories.length - 1;
+          const spanFullWidth = isTotalOdd && isLastItem;
 
-            <div className="absolute inset-0 bg-black/25 group-hover:bg-black/35 transition-colors duration-300" />
-            <div className="absolute inset-0 bg-primary-categoria-bg mix-blend-multiply" />
+          return (
+            <button
+              key={cat.id}
+              type="button"
+              onClick={() => handleSelectCategory(cat)}
+              className={`group w-full h-32 sm:h-36 rounded-2xl overflow-hidden relative flex items-center justify-center cursor-pointer shadow-sm active:scale-95 transition-all duration-200 border border-primary-clear-b ${
+                spanFullWidth ? 'sm:col-span-2' : ''
+              }`}
+            >
+              <img
+                src={cat.image || cat.image_url}
+                alt={cat.name}
+                className="absolute inset-0 w-full h-full object-cover blur-[1.5px] scale-105 group-hover:scale-115 transition-transform duration-500 ease-out"
+              />
 
-            <span className="categ-nombre relative z-10 text-lg sm:text-xl md:text-2xl font-black text-white uppercase tracking-normal sm:tracking-wide drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)] px-4 text-center leading-tight max-w-full transition-transform duration-300 group-hover:scale-105">
-              {cat.name}
-            </span>
-          </button>
-        ))}
+              <div className="absolute inset-0 bg-black/25 group-hover:bg-black/35 transition-colors duration-300" />
+              <div className="absolute inset-0 bg-primary-categoria-bg mix-blend-multiply" />
+
+              <span className="categ-nombre relative z-10 text-lg sm:text-xl md:text-2xl font-black text-white uppercase tracking-normal sm:tracking-wide drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)] px-4 text-center leading-tight max-w-full transition-transform duration-300 group-hover:scale-105">
+                {cat.name}
+              </span>
+            </button>
+          );
+        })}
 
         {filteredCategories.length === 0 && (
           <p className="text-gray-400 text-xs text-center col-span-full py-8">
